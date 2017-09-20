@@ -484,15 +484,15 @@ p {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  min-width: 100%;
-  min-height: 100%;
-  height: 100%;
-  width: 100%;
+  min-width: 50%;
+  min-height: 50%;
+  height: 10%;
+  width: 10%;
   display: block;
 }
 .wrap-hero-content{
   width: 100%;
-  height: 100%;
+  height: 50%;
   position: absolute;
   top: 0;
   left: 0;
