@@ -1106,7 +1106,7 @@ ul.portfolio-image li .desc{
   list-style: outside none none;
   float: left;
   overflow: hidden;
-  width: 20.0%;
+  width: 25.0%;
   font-size: 13px;
 }
 
@@ -1168,7 +1168,7 @@ ul.portfolio-image li .desc{
   background-color: #152b39;
 }
 .kaggle{
-  background: #d8d8d8;
+  background: #ABABAB;
 }
 .kaggle a:after{
   background: #008ABD;
