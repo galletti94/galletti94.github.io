@@ -40,7 +40,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bacon.js/0.7.53/Bacon.min.js">
 <br>
 
 <div class="container">
-  <h4 align="justify"> Here are some fun counters I made to get familiar with how streams work in Bacon JS. At first it was confusing to have the object oriented constructs meddling with the functional style. After spending some time writing code it seems like you can still efficiently write functional code in JS. I hope that reading this will help you skip some of the mental acrobatics that come with adjusting/translating familiar concepts to the constructs of a new language </h4>
+  <h4 align="justify"> Here are some fun counters I made to get familiar with how streams work in Bacon.js. It was confusing to have the object oriented constructs meddling with the functional style but after spending some time writing code it seems like you can still efficiently write functional code in JS. I hope that reading this will help you skip some of the mental acrobatics that come with adjusting/translating familiar concepts to the constructs of a new language </h4>
 </div>
 
 <br>
@@ -58,7 +58,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bacon.js/0.7.53/Bacon.min.js">
 <br>
 
 <div class="container">
-<h4 align="justify"> This first counter is the same as on the Bacon.js tutorial page with the addition of a FRP style reset button </h4>
+<h4 align="justify"> This first counter is the same as on the Bacon.js tutorial page with the addition of an FRP style reset button </h4>
 </div>
 
 <div class="container" sytle="text-align:center">
@@ -126,7 +126,7 @@ type="button" class="btn btn-default btn-lg"
 <br>
 
 <div class="container">
-<h4 align="justify"> This counter is simply applying a map function to the next stream element. Here the map is the square function but it could be any univariate function - simply change the return value of square(x). No need to keep track of previous values here because the input stream is responsible for telling our mapping what it should evaluate. If the input stream is more complex, it is there that the previous values should be recorded.  </h4>
+<h4 align="justify"> This counter is simply applying a map function to an input stream. Here the map is the square function but it could be any univariate function - simply change the return value of square(x). No need to keep track of previous values here because the input stream is responsible for telling our mapping what value it should evaluate. If the input stream is more complex, we would need to be a bit more careful in order to be able to backtrack </h4>
 </div>
 
 <div class="container" sytle="text-align:center">
@@ -203,7 +203,7 @@ theCounts6.assign($('#theCounts6'), 'text');
 <br>
 
 <div class="container">
-<h4 align="justify"> This counter is more complex because you need to keep track of a rolling product of numbers and multiply it by the next integer when Next is pressed or divide by the previous when Prev is pressed. You need to map the stream of clicks in such a way that you continuously dynamically update the counter by processing the next click while not recomputing everything </h4>
+<h4 align="justify"> For the Factorial counter we need to keep track of a rolling product of numbers and multiply this accumulation by the next integer when Next is pressed or divide by the previous when Prev is pressed. We need to map the stream of clicks in such a way that you continuously dynamically update the counter by processing the next click while not recomputing everything. Here I generated a stream of integers and accumulated their product in a mapping of this stream. To achieve this, the stream of integers needed to consist of pairs of consecutive integers in order to allow for backtracking </h4>
 </div>
 
 <div class="container" sytle="text-align:center">
@@ -341,7 +341,7 @@ theCounts3.assign($('#theCounts3'), 'text');
 <br>
 
 <div class="container">
-<h4 align="justify"> This one was super fun! The goal is to build a counter that applies a foldleft on a stream on inputs (here the integers - but this can easily be changed). The difficult part is the Prev function because it requires your fold function to be invertible. Also to avoid repeating some code, I built a higher order function that takes in your input stream, an initial value, a fold function and its inverse and applies fold accordingly. It turns out that the each of the 4 functions I chose for this example had their inverse be one of these functions - less code repetition! You'll notice that the product counter is identical to the factorial counter and the sum counter, although somewhat similar, is distinct from the fib counter</h4>
+<h4 align="justify"> This one was super fun! The goal is to build a counter that applies a foldleft on a stream on inputs (here the integers - but this can easily be changed to something other than the integers). The difficult part is the Prev function because it requires our fold function to be invertible. Also to avoid repeating some code, I built a higher order function that takes in your input stream, an initial value, a fold function and its inverse and applies fold accordingly. It turns out that each of the 4 functions I chose for this example was also the inverse of one of these 4 function - less code repetition! You'll notice that the product counter is identical to the factorial counter and the sum counter, although somewhat similar, is distinct from the fib counter </h4>
 </div>
 
 <div class="container" sytle="text-align:center">
@@ -462,7 +462,7 @@ theCounts_diff.assign($('#theCounts_diff'), 'text');
 <br>
 
 <div class="container">
-<h4 align="justify"> Here we need to keep track of three values: instead of computing the length of the stream at every step, we keep track of the last number of integers we have seen so far (for the Prev button) and the current number of integer we have seen so far (for the Next button), and we also keep track of a rolling folding function (sum and its inverse diff) to be divided by the number of integers seen so far. </h4>
+<h4 align="justify"> Here, instead of computing the length of the stream at every step, we keep track of the last number of integers we have seen so far (for the Prev button) and the current number of integer we have seen so far (for the Next button). We also need to keep track of a rolling folding function (sum and its inverse diff) to be divided by the number of integers seen so far. This is why our input stream is keeping track of 3 values. We will see in the next counter this is just folding two streams (one of a rolling length, the other of rolling sum). </h4>
 </div>
 
 <div class="container" sytle="text-align:center">
@@ -533,7 +533,7 @@ theCounts5.assign($('#theCounts5'), 'text');
 <br>
 
 <div class="container">
-<h4 align="justify"> Similarly to foldleft, we want to fold two streams at once through a fold function f of 3 variables (the initial value, the value of the first stream, the value of the second stream). Maybe not the cleanest code I have written, but the idea is that for each stream we want to keep track of previous values. The inverse is applied to the first [stream1Value1, Stream2Value1] pair and the fold function is applied to the second pair. In case of more complex input streams, we can deal with some backtracking. </h4>
+<h4 align="justify"> Similarly to foldleft, we want to fold two streams at once through a fold function f of 3 variables (an initial value, the value of the first stream, the value of the second stream). The idea is that for each stream we want to keep track of previous values in order to deal with backtracking on a more general level. The inverse is applied to the first pair of the tuple (representing the previous stream value) while the fold function is applied to the second pair of the tuple. </h4>
 </div>
 
 <div class="container" sytle="text-align:center">
