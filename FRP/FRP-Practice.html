@@ -628,6 +628,95 @@ theCounts_sumInvSq.assign($('#theCounts_sumInvSq'), 'text');
 
 <hr size="2">
 
+
+<br>
+<br>
+<br>
+
+<div class="container" style="text-align:center">
+  <h2> Pairs of integers Counter </h2>
+</div>
+
+<br>
+
+<div class="container">
+<h4 align="justify"> The goal is to combine two infinite streams into a single stream of all possible pairs (a, b) where a is a member of the first stream and b is a member of the second stream. Here our input streams are the integers. The naive approach is to have a stream of the first element of the first stream paired with all the elements of the second stream and append to it the second element of the first stream paired with all the elements of the second stream and so on. However because these streams are infinite, we will never append. Taking a closer look at these lattice points, we notice that given an integer N there are only finitely many points with the property that the sum of its coordinates is equal to N. Because of this we can enumerate sequentially all points with coordinate sum 0, then with sum 1, and so on. This is equivalent to listing all the diagonal lattice points in the 2D grid. With this in mind we can nicely enumerate all the pairs of intgers. </h4>
+</div>
+
+<div class="container" sytle="text-align:center">
+<textarea class="container" style="font-weight:bold; background-color:#95B9D9; height:270px; overflow:hidden; resize:none">
+var pairNext = $('#pairsNext').asEventStream('click');
+var pairPrev = $('#pairsPrev').asEventStream('click');
+var reset = $('#resetPairs').asEventStream('click');
+
+function aux(n, i) {
+    if (i <= n) {
+	return "( " + [i, n-i] + " )" + ", " + aux(n, i+1)
+    } else {
+	return []
+    }
+}
+
+function diag(n) {
+    return aux(n, 0)
+}
+
+var next = pairNext.map(1).merge(pairPrev.map(-1)).merge(reset.map(0)).scan(0, function(x,y) {if (y === 0) {return 0} else {return x + y}});
+var theCounts_pairs = next.map(function(x) {return "( " + diag(x).toString().slice(0, -2) + " )"});
+
+theCounts_pairs.assign($('#theCounts_pairs'), 'text');
+
+</textarea>
+</div>
+
+
+<br>
+<br>
+
+<div class="row">
+<div class="col-md-12">
+<center>
+<p id="theCounts_pairs" class="h1">00</p>
+</center>
+</div>
+</div><!--class-row-->
+
+<hr size="2">
+
+<div class="row">
+<div class="col-md-4">
+<center>
+<button
+ id="pairsNext"
+ type="button"
+ class="btn btn-default btn-lg"
+>Next Pairs</button>
+</center>
+</div>
+<div class="col-md-4">
+<center>
+<button
+ id="pairsPrev"
+ type="button"
+ class="btn btn-default btn-lg"
+>Prev Pairs</button>
+</center>
+</div>
+<div class="col-md-4">
+<center>
+<button
+ id="resetPairs"
+ type="button"
+ class="btn btn-default btn-lg"
+>Reset</button>
+</center>
+</div>
+</div><!--class-row-->
+
+<hr size="2">
+
+
+
 </div>
 
 
