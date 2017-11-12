@@ -715,6 +715,94 @@ theCounts_pairs.assign($('#theCounts_pairs'), 'text');
 
 <hr size="2">
 
+<br>
+<br>
+<br>
+
+<div class="container" style="text-align:center">
+  <h2> Triples of integers Counter </h2>
+</div>
+
+<br>
+
+<div class="container">
+<h4 align="justify"> Similarly to the previous counter, we want to now list all the lattice points of the 3D space. To do this we again list all points of each diagonal which are now a triangular slices of the plane in which all the points have equal coordinate sums. </h4>
+</div>
+
+<div class="container" sytle="text-align:center">
+<textarea class="container" style="font-weight:bold; background-color:#95B9D9; height:510px; overflow:hidden; resize:none">
+// theNatsTriples counter
+var tripleNext = $('#triplesNext').asEventStream('click');
+var triplePrev = $('#triplesPrev').asEventStream('click');
+var reset = $('#resetTriples').asEventStream('click');
+
+function aux(n, i, j) {
+    if (i+j < n) {
+	return "( " + [i, j, n-(i+j)] + " )" + ", " + aux(n, i+1, j)
+    } else {
+	if (j <= n) {
+	    return "( " + [i, j, n-(i+j)] + " )" + ", " + aux(n, 0, j+1)
+	} else {
+	    return []
+	}
+    }
+}
+
+function triang(n) {
+    return aux(n, 0, 0)
+}
+
+var next = tripleNext.map(1).merge(triplePrev.map(-1)).merge(reset.map(0)).scan(0, function(x,y) {if (y === 0) {return 0} else {return x + y}});
+var theCounts_triples = next.map(function(x) {return "( " + triang(x).toString().slice(0, -2) + " )"});
+
+theCounts_triples.assign($('#theCounts_triples'), 'text');
+</textarea>
+</div>
+
+<br>
+<br>
+
+<div class="row">
+<div class="col-md-12">
+<center>
+<p id="theCounts_triples" class="h1">00</p>
+</center>
+</div>
+</div><!--class-row-->
+
+<hr size="2">
+
+<div class="row">
+<div class="col-md-4">
+<center>
+<button
+ id="triplesNext"
+ type="button"
+ class="btn btn-default btn-lg"
+>Next Triples</button>
+</center>
+</div>
+<div class="col-md-4">
+<center>
+<button
+ id="triplesPrev"
+ type="button"
+ class="btn btn-default btn-lg"
+>Prev Triples</button>
+</center>
+</div>
+<div class="col-md-4">
+<center>
+<button
+ id="resetTriples"
+ type="button"
+ class="btn btn-default btn-lg"
+>Reset</button>
+</center>
+</div>
+</div><!--class-row-->
+
+<hr size="2">
 
 
 </div>
