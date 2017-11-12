@@ -665,7 +665,6 @@ var next = pairNext.map(1).merge(pairPrev.map(-1)).merge(reset.map(0)).scan(0, f
 var theCounts_pairs = next.map(function(x) {return "( " + diag(x).toString().slice(0, -2) + " )"});
 
 theCounts_pairs.assign($('#theCounts_pairs'), 'text');
-
 </textarea>
 </div>
 

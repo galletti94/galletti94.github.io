@@ -132,16 +132,16 @@ var pairNext = $('#pairsNext').asEventStream('click');
 var pairPrev = $('#pairsPrev').asEventStream('click');
 var reset = $('#resetPairs').asEventStream('click');
 
-function aux(n, i) {
+function aux1(n, i) {
     if (i <= n) {
-	return "( " + [i, n-i] + " )" + ", " + aux(n, i+1)
+	return "( " + [i, n-i] + " )" + ", " + aux1(n, i+1)
     } else {
 	return []
     }
 }
 
 function diag(n) {
-    return aux(n, 0)
+    return aux1(n, 0)
 }
 
 var next = pairNext.map(1).merge(pairPrev.map(-1)).merge(reset.map(0)).scan(0, function(x,y) {if (y === 0) {return 0} else {return x + y}});
@@ -156,12 +156,12 @@ var tripleNext = $('#triplesNext').asEventStream('click');
 var triplePrev = $('#triplesPrev').asEventStream('click');
 var reset = $('#resetTriples').asEventStream('click');
 
-function aux(n, i, j) {
+function aux2(n, i, j) {
     if (i+j < n) {
-	return "( " + [i, j, n-(i+j)] + " )" + ", " + aux(n, i+1, j)
+	return "( " + [i, j, n-(i+j)] + " )" + ", " + aux2(n, i+1, j)
     } else {
 	if (j <= n) {
-	    return "( " + [i, j, n-(i+j)] + " )" + ", " + aux(n, 0, j+1)
+	    return "( " + [i, j, n-(i+j)] + " )" + ", " + aux2(n, 0, j+1)
 	} else {
 	    return []
 	}
@@ -169,7 +169,7 @@ function aux(n, i, j) {
 }
 
 function triang(n) {
-    return aux(n, 0, 0)
+    return aux2(n, 0, 0)
 }
 
 var next = tripleNext.map(1).merge(triplePrev.map(-1)).merge(reset.map(0)).scan(0, function(x,y) {if (y === 0) {return 0} else {return x + y}});
