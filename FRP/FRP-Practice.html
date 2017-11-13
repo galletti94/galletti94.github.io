@@ -62,12 +62,22 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bacon.js/0.7.53/Bacon.min.js">
 </div>
 
 <div class="container" sytle="text-align:center">
-<textarea class="container" style="font-weight:bold; background-color:#95B9D9; height:150px; overflow:hidden; resize:none">
+<textarea class="container" style="font-weight:bold; background-color:#95B9D9; height:350px; overflow:hidden; resize:none">
 var up = $('#up').asEventStream('click');
 var down = $('#down').asEventStream('click');
 var reset = $('#reset').asEventStream('click');
 
-var theCounts1 = up.map(1).merge(down.map(-1)).merge(reset.map(0)).scan(0, function(x, y) {if (y === 0) {return 0} else { return x + y }});
+//map the clicks to 1, -1, 0
+var up1 = up.map(1);
+var down1 = down.map(-1);
+var reset0 = reset.map(0);
+
+// merge the clicks
+var merged = up1.merge(down1).merge(reset0);
+
+// accumulate 
+var theCounts1 = merged.scan(0, function(x, y) {if (y === 0) {return 0} else { return x + y }});
+
 //assign value to counter
 theCounts1.assign($('#theCounts1'), 'text');
 </textarea>
@@ -130,19 +140,26 @@ type="button" class="btn btn-default btn-lg"
 </div>
 
 <div class="container" sytle="text-align:center">
-<textarea class="container" style="font-weight:bold; background-color:#95B9D9; height:250px; overflow:hidden; resize:none">
-var sqNext = $('#sqNext').asEventStream('click');
-var sqPrev = $('#sqPrev').asEventStream('click');
-var reset = $('#resetSq').asEventStream('click');
+  <textarea class="container" style="font-weight:bold; background-color:#95B9D9; height:390px; overflow:hidden; resize:none">
+// create and map the clicks
+var sqNext = $('#sqNext').asEventStream('click').map(1);
+var sqPrev = $('#sqPrev').asEventStream('click').map(-1);
+var reset = $('#resetSq').asEventStream('click').map(0);
 
 function square(x) {
     return x*x
 }
 
-var theCounts6 = sqNext.map(1).merge(reset.map(0)).merge(sqPrev.map(-1)).scan(0, function(x,y) {if (y === 0) {return 0} else {return x + y}}).scan(0, function(x, y) {return square(y)});
+//merge the buttons
+var merged = sqNext.merge(reset).merge(sqPrev);
+
+// accumulate
+var theInts = merged.scan(0, function(x,y) {if (y === 0) {return 0} else {return x + y}})
+
+// map each value to its square
+var theCounts6 = theInts.map(function(y) {return square(y)});
 
 theCounts6.assign($('#theCounts6'), 'text');
-
 </textarea>
 </div>
 
@@ -207,13 +224,19 @@ theCounts6.assign($('#theCounts6'), 'text');
 </div>
 
 <div class="container" sytle="text-align:center">
-<textarea class="container" style="font-weight:bold; background-color:#95B9D9; height:190px; overflow:hidden; resize:none">
-var factNext = $('#factNext').asEventStream('click');
-var factPrev = $('#factPrev').asEventStream('click');
-var reset = $('#resetFact').asEventStream('click');
+<textarea class="container" style="font-weight:bold; background-color:#95B9D9; height:290px; overflow:hidden; resize:none">
+var factNext = $('#factNext').asEventStream('click').map(1);
+var factPrev = $('#factPrev').asEventStream('click').map(-1);
+var reset = $('#resetFact').asEventStream('click').map(0);
 
 // need to create an input stream of "consecutive pairs" of integers to build fact and reverse fact
-var theCounts2 = factNext.map(1).merge(reset.map(0)).merge(factPrev.map(-1)).scan([0, 1], function(x,y) {if (y === 0) {return [0, 1]} else {return [x[1], x[1] + y]}}).scan(1, function(x, y) {if ( y[0] === 0 ) {return 1} else {if (y[0]>= y[1]) {return x/y[0] } else {return x*y[1]}}});
+
+var merged = factNext.merge(reset).merge(factPrev);
+
+var theInts2 = merged.scan([0, 1], function(x,y) {if (y === 0) {return [0, 1]} else {return [x[1], x[1] + y]}});
+
+// if the first of the tuple is less than the second, then we multiply, otherwise we divide
+var theCounts2 = theInts2.scan(1, function(x, y) {if ( y[0] === 0 ) {return 1} else {if (y[0]>= y[1]) {return x/y[0] } else {return x*y[1]}}});
 
 theCounts2.assign($('#theCounts2'), 'text');
 </textarea>
@@ -276,13 +299,20 @@ theCounts2.assign($('#theCounts2'), 'text');
 </div>
 
 <div class="container" sytle="text-align:center">
-<textarea class="container" style="font-weight:bold; background-color:#95B9D9; height:190px; overflow:hidden; resize:none">
+<textarea class="container" style="font-weight:bold; background-color:#95B9D9; height:310px; overflow:hidden; resize:none">
 var fibNext = $('#fibNext').asEventStream('click');
 var fibPrev = $('#fibPrev').asEventStream('click');
 var reset = $('#resetFib').asEventStream('click');
 
 // similar to fact, need to keep in memory the previous value so that reverse fib can work
-var  theCounts3 = fibNext.map(1).merge(reset.map(0)).merge(fibPrev.map(-1)).scan([0, 1], function(x,y) {if (y === 0) {return [0, 1]} else {if (y < 0) { return [x[1]-x[0], x[0]] } else {return [x[1], x[1] + x[0]]}}}).scan(1, function(x, y) {if ( y[0] === 0 ) {return 0} else {if (y[0]>= y[1]) {return y[0]} else {return y[1]}}});
+
+var merged = fibNext.map(1).merge(reset.map(0)).merge(fibPrev.map(-1));
+
+// get pair of neighbor fibs
+var theFibs2 = merged.scan([0, 1], function(x,y) {if (y === 0) {return [0, 1]} else {if (y < 0) { return [x[1]-x[0], x[0]] } else {return [x[1], x[1] + x[0]]}}});
+
+// map to single value
+var theCounts3 = theFibs2.map(function(y) {if ( y[0] === 0 ) {return 0} else {if (y[0]>= y[1]) {return y[0]} else {return y[1]}}});
 
 theCounts3.assign($('#theCounts3'), 'text');
 </textarea>

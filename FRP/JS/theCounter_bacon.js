@@ -87,7 +87,7 @@ function square(x) {
     return x*x
 }
 
-var theCounts6 = sqNext.map(1).merge(reset.map(0)).merge(sqPrev.map(-1)).scan(0, function(x,y) {if (y === 0) {return 0} else {return x + y}}).scan(0, function(x, y) {return square(y)});
+var theCounts6 = sqNext.map(1).merge(reset.map(0)).merge(sqPrev.map(-1)).scan(0, function(x,y) {if (y === 0) {return 0} else {return x + y}}).map(function(y) {return square(y)});
 
 theCounts6.assign($('#theCounts6'), 'text');
 
