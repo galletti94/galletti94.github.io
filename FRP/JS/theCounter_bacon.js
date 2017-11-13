@@ -176,3 +176,33 @@ var next = tripleNext.map(1).merge(triplePrev.map(-1)).merge(reset.map(0)).scan(
 var theCounts_triples = next.map(function(x) {return "( " + triang(x).toString().slice(0, -2) + " )"});
 
 theCounts_triples.assign($('#theCounts_triples'), 'text');
+
+
+var canvas = document.getElementById("theCanvas");
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "#123456";
+ctx.fillRect(0, 0, 10, 10)
+
+var width = 400;
+var height = 400;
+
+var u = $('#upWorm').asEventStream('click').map([0, -1]);
+var d = $('#downWorm').asEventStream('click').map([0, 1]);
+var l = $('#leftWorm').asEventStream('click').map([-1, 0]);
+var r = $('#rightWorm').asEventStream('click').map([1, 0]);
+var reset = $('#resetWorm').asEventStream('click').map([0, 0]);
+
+function inc(x, y) {
+    if (x < 0) {
+	x = width + x
+    }
+    if (y < 0) {
+	y = height + y
+    }
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillRect(x, y, 10, 10);
+}
+
+var theWormPos = u.merge(d).merge(l).merge(r).merge(reset).scan([0, 0], function(x, y) {if (y[0] !== y[1]) {return [(x[0] + 10*y[0])%width, (x[1] + 10*y[1])%height]} else {return [0,0]}}).map(function(x) {return inc(x[0], x[1])});
+
+theWormPos.assign($('#theCanvas'), 'text');
