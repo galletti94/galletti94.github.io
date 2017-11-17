@@ -40,18 +40,66 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bacon.js/0.7.53/Bacon.min.js">
 <br>
 
 <div class="container">
-  <h4 align="justify"> Here are some fun counters I made to get familiar with how streams work in Bacon.js. It was confusing to have the object oriented constructs meddling with the functional style but after spending some time writing code it seems like you can still efficiently write functional code in JS. I hope that reading this will help you skip some of the mental acrobatics that come with adjusting/translating familiar concepts to the constructs of a new language </h4>
+  <h4 align="justify"> Here are some fun counters I made to get familiar with Bacon.js. I hope that reading this will help you skip some of the mental acrobatics that come with adjusting/translating familiar concepts to the constructs of a new language </h4>
 </div>
 
 <br>
 <br>
+
+
+<div class="container" style="text-align:center">
+  <h2> Table of Content </h2>
+  
+  <hr size="3">
+
+  <ul style="margin-left:0%; text-align:left; list-style-type:none">
+    <li>
+      <a href="#simple"> <h4> Simple Counter </h4> </a>
+    </li>
+    <li>
+      <a href="#square"> <h4>  Square Counter </h4> </a>
+    </li>
+    <li>
+      <a href="#fact"> <h4>  Factorial Counter </h4> </a>
+    </li>
+    <li>
+      <a href="#fib">  <h4> Fibonacci Counter </h4> </a>
+    </li>
+    <li>
+      <a href="#fold"> <h4>  Foldleft </h4> </a>
+    </li>
+    <li>
+      <a href="#avg"> <h4>  Rolling Average </h4> </a>
+    </li>
+    <li>
+      <a href="#fold2"> <h4>  Foldleft2 </h4> </a>
+    </li>
+    <li>
+      <a href="#pairs"> <h4> List of all lattice points in the Plane </h4> </a>
+    </li>
+    <li>
+      <a href="#triples">  <h4> List of all lattice points in 3D Space </h4> </a>
+    </li>
+    <li>
+      <a href="#worm">  <h4> Worm  </h4> </a>
+    </li>
+    <li>
+      <a href="#prime">  <h4> Prime Counter </h4> </a>
+    </li>
+  </ul>
+
+  <hr size="3">
+  
+</div>
+
+
 <br>
 <br>
 <br>
 
 <div class="container-fluid">
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:center" id="simple"> 
   <h2> Simple counter </h2>
 </div>
 
@@ -129,7 +177,7 @@ type="button" class="btn btn-default btn-lg"
 <br>
 <br>
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:center" id="square">
   <h2> Square counter </h2>
 </div>
 
@@ -213,7 +261,7 @@ theCounts6.assign($('#theCounts6'), 'text');
 <br>
 
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:center" id="fact">
   <h2> Factorial counter </h2>
 </div>
 
@@ -288,7 +336,7 @@ theCounts2.assign($('#theCounts2'), 'text');
 <br>
 <br>
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:center" id="fib">
   <h2> Fibonnacci counter </h2>
 </div>
 
@@ -364,7 +412,7 @@ theCounts3.assign($('#theCounts3'), 'text');
 <br>
 <br>
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:center" id="fold">
   <h2> Fold left counter on N </h2>
 </div>
 
@@ -485,7 +533,7 @@ theCounts_diff.assign($('#theCounts_diff'), 'text');
 <br>
 <br>
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:center" id="avg">
   <h2> Rolling average on N </h2>
 </div>
 
@@ -556,7 +604,7 @@ theCounts5.assign($('#theCounts5'), 'text');
 <br>
 <br>
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:center" id="fold2">
   <h2> Fold left2 counter on (N, N) </h2>
 </div>
 
@@ -663,7 +711,7 @@ theCounts_sumInvSq.assign($('#theCounts_sumInvSq'), 'text');
 <br>
 <br>
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:center" id="pairs">
   <h2> Pairs of integers Counter </h2>
 </div>
 
@@ -748,7 +796,7 @@ theCounts_pairs.assign($('#theCounts_pairs'), 'text');
 <br>
 <br>
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:center" id="triples">
   <h2> Triples of integers Counter </h2>
 </div>
 
@@ -838,7 +886,7 @@ theCounts_triples.assign($('#theCounts_triples'), 'text');
 <br>
 <br>
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:center" id="worm">
   <h2> FRP Worm Game </h2>
 </div>
 
@@ -956,7 +1004,7 @@ Your browser does not support the canvas element.
 <br>
 <br>
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:center" id="prime">
   <h2> Prime counter </h2>
 </div>
 
