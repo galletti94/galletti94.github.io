@@ -954,10 +954,100 @@ Your browser does not support the canvas element.
 
 <br>
 <br>
+<br>
+
+<div class="container" style="text-align:center">
+  <h2> Prime counter </h2>
+</div>
+
+<br>
+
+<div class="container">
+  <h4 align="justify"> As you will notice, to list the primes I needed a couple combinators to simulate lazy evaluation of functional streams. We then filter the natural numbers in a recursive way so that a new filter is added at every evaluation. You'll notice if you click the next Prime button enough that it stops in the 400s. This is due to a stack overflow. I'll see what I can do about fixing this after reading a bit about how JS does tail call optimization. </h4>
+</div>
+
+<div class="container" sytle="text-align:center">
+<textarea class="container" style="font-weight:bold; background-color:#95B9D9; height:900px; overflow:hidden; resize:none">
+function* naturalNumbers() {
+
+    function* _naturalNumbers(n) {
+	yield n;
+	yield *_naturalNumbers(n + 1);
+    }
+
+    yield* _naturalNumbers(2);
+}
+
+function* filter(fn, st) {
+    var n = st.next().value;
+    
+    while (!fn( n )) {
+	var n = st.next().value;
+    }
+    yield n;
+    yield* filter(fn, st);
+}
+
+function* sieve (theNats) {
+
+    function* _sieve(Nats) {
+	let n = Nats.next();
+	yield n.value;
+	yield* _sieve(filter(x => x%n.value !== 0, Nats));
+    }
+    
+    yield* _sieve(theNats);
+}
+
+const N = naturalNumbers();
+
+const primes = sieve(N);
+
+function help(Nat) {
+    return Nat.next().value;
+}
+
+var nextp = $('#nextPrime').asEventStream('click').map(1);
+
+var thePrimes = nextp.scan(0, function(x, y) {return help(primes)});
+
+thePrimes.assign($('#thePrimes'), 'text');
+</textarea>
+</div>
+
+<br>
+<br>
+
+<div class="row">
+<div class="col-md-12">
+<center>
+<p id="thePrimes" class="h1">00</p>
+</center>
+</div>
+</div><!--class-row-->
+
+<hr size="2">
+
+<div class="row">
+<div class="col-md-12">
+<center>
+<button
+ id="nextPrime"
+ type="button"
+ class="btn btn-default btn-lg"
+>Next Prime</button>
+</center>
+</div>
+</div><!--class-row-->
+
+<hr size="2">
+
+
+<br>
+<br>
 
 
 </div>
-
 
 <script
  src="./JS/theCounter_bacon.js">

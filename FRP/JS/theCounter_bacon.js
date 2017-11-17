@@ -206,3 +206,51 @@ function inc(x, y) {
 var theWormPos = u.merge(d).merge(l).merge(r).merge(reset).scan([0, 0], function(x, y) {if (y[0] !== y[1]) {return [(x[0] + 10*y[0])%width, (x[1] + 10*y[1])%height]} else {return [0,0]}}).map(function(x) {return inc(x[0], x[1])});
 
 theWormPos.assign($('#theCanvas'), 'text');
+
+
+// sieve of Eratosthenes
+function *naturalNumbers() {
+
+    function *_naturalNumbers(n) {
+	yield n;
+	yield *_naturalNumbers(n + 1);
+    }
+
+    yield *_naturalNumbers(2);
+}
+
+
+function* filter(fn, st) {
+    var n = st.next().value;
+    
+    while (!fn( n )) {
+	var n = st.next().value;
+    }
+    yield n;
+    yield* filter(fn, st);
+}
+
+function *sieve (theNats) {
+
+    function *_sieve(Nats) {
+	let n = Nats.next();
+	yield n.value;
+	yield* _sieve(filter(x => x%n.value !== 0, Nats));
+    }
+    
+    yield *_sieve(theNats);
+}
+
+const N = naturalNumbers();
+
+const primes = sieve(N);
+
+function help(Nat) {
+    return Nat.next().value;
+}
+
+var nextp = $('#nextPrime').asEventStream('click').map(1);
+
+var thePrimes = nextp.scan(0, function(x, y) {return help(primes)});
+
+thePrimes.assign($('#thePrimes'), 'text');
