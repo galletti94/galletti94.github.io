@@ -12061,7 +12061,6 @@ Number of tweets with location enabled =  95
 <span class="kn">from</span> <span class="nn">emoji</span> <span class="k">import</span> <span class="n">UNICODE_EMOJI</span>
 <span class="kn">from</span> <span class="nn">textblob</span> <span class="k">import</span> <span class="n">TextBlob</span>
 <span class="kn">from</span> <span class="nn">textblob.sentiments</span> <span class="k">import</span> <span class="n">NaiveBayesAnalyzer</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
 <span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s1">&#39;usa_db&#39;</span><span class="p">]</span>
@@ -12113,6 +12112,307 @@ Number of tweets with location enabled =  95
 <pre>positive emojis =  [(&#39;🌹&#39;, 9), (&#39;❤&#39;, 9), (&#39;✨&#39;, 8), (&#39;🎄&#39;, 6), (&#39;🎶&#39;, 6)]
 
 negative_emojis =  [(&#39;😭&#39;, 7), (&#39;🔥&#39;, 6), (&#39;💦&#39;, 4), (&#39;❣&#39;, 2), (&#39;⛓&#39;, 2)]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Great! It seems intuitive that a rose, a heart, and stars be associated with positive sentiment and a crying face would be associated with negative sentiment. It is good to see these results support our intuition!</p>
+<p>Now we would like to know what kinds of tweets do people with location disabled make?</p>
+<h4 id="Location-Disabled-Tweets---Emojis">Location Disabled Tweets - Emojis<a class="anchor-link" href="#Location-Disabled-Tweets---Emojis">&#182;</a></h4><p>First let's look at the kinds of emojis are used in both groups.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
+<span class="kn">from</span> <span class="nn">emoji</span> <span class="k">import</span> <span class="n">UNICODE_EMOJI</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s1">&#39;usa_db&#39;</span><span class="p">]</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s1">&#39;usa_tweets_collection&#39;</span><span class="p">]</span>
+<span class="n">tweets_iterator</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+
+<span class="n">enabled_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">disabled_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">tweetcnt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets_iterator</span><span class="p">:</span>
+    <span class="n">tweetcnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">UNICODE_EMOJI</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">enabled_dict</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="n">enabled_dict</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">disabled_dict</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="n">disabled_dict</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">enabled_dict</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">enabled_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">disabled_dict</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">disabled_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of Tweets = &#39;</span><span class="p">,</span> <span class="n">tweetcnt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;location enabled emojis = &#39;</span><span class="p">,</span> <span class="n">enabled_dict</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;location disabled emojis = &#39;</span><span class="p">,</span> <span class="n">disabled_dict</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Number of Tweets =  21015
+
+location enabled emojis =  [(&#39;❤&#39;, 144), (&#39;🔥&#39;, 144), (&#39;🎄&#39;, 106), (&#39;🏾&#39;, 104), (&#39;😍&#39;, 102), (&#39;🏼&#39;, 97), (&#39;😂&#39;, 88), (&#39;🏻&#39;, 79), (&#39;✨&#39;, 73), (&#39;🏽&#39;, 67)]
+
+location disabled emojis =  [(&#39;🍌&#39;, 28), (&#39;❤&#39;, 20), (&#39;🏽&#39;, 17), (&#39;😍&#39;, 16), (&#39;🔥&#39;, 16), (&#39;😂&#39;, 16), (&#39;❄&#39;, 15), (&#39;🎄&#39;, 15), (&#39;🏼&#39;, 15), (&#39;🏻&#39;, 11)]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Looks like people with location disabled use similar emojis to those with location enabled - the distributions of emojis, from looking at the lists above look similar. I wonder if there is a difference in what these two groups post about... Let's look at the tags in their tweets to get a sense of what these people post about!</p>
+<h4 id="Location-Disabled-Tweets---Tags">Location Disabled Tweets - Tags<a class="anchor-link" href="#Location-Disabled-Tweets---Tags">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s1">&#39;usa_db&#39;</span><span class="p">]</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s1">&#39;usa_tweets_collection&#39;</span><span class="p">]</span>
+<span class="n">tweets_iterator</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+
+<span class="n">enabled_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">disabled_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">tweetcnt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets_iterator</span><span class="p">:</span>
+    <span class="n">tweetcnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\B(\#[a-zA-Z]+\b)(?!;)&#39;</span><span class="p">,</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">enabled_dict</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">enabled_dict</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">disabled_dict</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">disabled_dict</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">enabled_dict</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">enabled_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">disabled_dict</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">disabled_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of Tweets = &#39;</span><span class="p">,</span> <span class="n">tweetcnt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;location enabled emojis = &#39;</span><span class="p">,</span> <span class="n">enabled_dict</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;location disabled emojis = &#39;</span><span class="p">,</span> <span class="n">disabled_dict</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Number of Tweets =  21015
+
+location enabled emojis =  [(&#39;#job&#39;, 6783), (&#39;#CareerArc&#39;, 6040), (&#39;#Hiring&#39;, 5335), (&#39;#hiring&#39;, 2605), (&#39;#Jobs&#39;, 1836), (&#39;#Job&#39;, 1834), (&#39;#Retail&#39;, 974), (&#39;#Hospitality&#39;, 719), (&#39;#Sales&#39;, 424), (&#39;#CustomerService&#39;, 392)]
+
+location disabled emojis =  [(&#39;#job&#39;, 395), (&#39;#Hiring&#39;, 309), (&#39;#hiring&#39;, 173), (&#39;#Job&#39;, 128), (&#39;#Jobs&#39;, 127), (&#39;#Retail&#39;, 45), (&#39;#Nursing&#39;, 33), (&#39;#Sales&#39;, 31), (&#39;#Veterans&#39;, 29), (&#39;#Hospitality&#39;, 24)]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It looks like a majority of people from both groups tweet about similar topics. Maybe there is just considerable bias as to why people tweet in the first place and to better understand what people have location enabled and location disabled, we need to look at this problem from a different angle.</p>
+<p>Let's start from a specific set of keywords and observe the distribution of location enabled vs disabled!</p>
+<h4 id="Keywords-about-Machine-Learning">Keywords about Machine Learning<a class="anchor-link" href="#Keywords-about-Machine-Learning">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">tweepy</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
+
+<span class="n">MONGO_HOST</span> <span class="o">=</span> <span class="s1">&#39;mongodb://localhost/twitterdb&#39;</span>
+
+<span class="n">WORDS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#deeplearning&#39;</span><span class="p">,</span> <span class="s1">&#39;#computervision&#39;</span><span class="p">,</span> <span class="s1">&#39;#datascience&#39;</span><span class="p">,</span> <span class="s1">&#39;#bigdata&#39;</span><span class="p">]</span>
+
+<span class="n">keys_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;keys.txt&quot;</span><span class="p">)</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">keys_file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">consumer_key</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+<span class="n">consumer_secret</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+<span class="n">access_token</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+<span class="n">access_token_secret</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">StreamListener</span><span class="p">(</span><span class="n">tweepy</span><span class="o">.</span><span class="n">StreamListener</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You are now connected to the streaming API.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status_code</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;An Error has occured: &#39;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">status_code</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="c1"># This is the meat of the script...it connects to your mongoDB and stores the tweet</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="n">MONGO_HOST</span><span class="p">)</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">twitterdb</span>
+            <span class="n">datajson</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">created_at</span> <span class="o">=</span> <span class="n">datajson</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tweet collected at &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">created_at</span><span class="p">))</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">twitter_search</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">datajson</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<span class="n">auth</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">OAuthHandler</span><span class="p">(</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="p">)</span>
+<span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">access_token_secret</span><span class="p">)</span>
+<span class="n">listener</span> <span class="o">=</span> <span class="n">StreamListener</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="n">tweepy</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">wait_on_rate_limit</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="n">streamer</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">Stream</span><span class="p">(</span><span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">listener</span><span class="o">=</span><span class="n">listener</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tracking: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">WORDS</span><span class="p">))</span>
+<span class="n">streamer</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">track</span><span class="o">=</span><span class="n">WORDS</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tracking: [&#39;#deeplearning&#39;, &#39;#computervision&#39;, &#39;#datascience&#39;, &#39;#bigdata&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As before, keep this runnning for a bit while to collect some tweets. Now we can do some more analysis:</p>
+<h3 id="More-on-location">More on location<a class="anchor-link" href="#More-on-location">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s1">&#39;twitterdb&#39;</span><span class="p">]</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s1">&#39;twitter_search&#39;</span><span class="p">]</span>
+<span class="n">tweets_iterator</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+
+<span class="n">enabled</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">disabled</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">tweetcnt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets_iterator</span><span class="p">:</span>
+    <span class="n">tweetcnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]:</span>
+        <span class="n">enabled</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">disabled</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of Tweets = &#39;</span><span class="p">,</span> <span class="n">tweetcnt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;with location enabled = &#39;</span><span class="p">,</span> <span class="n">enabled</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;with location disabled = &#39;</span><span class="p">,</span> <span class="n">disabled</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Number of Tweets =  1019
+
+with location enabled =  719
+
+with location disabled =  300
 </pre>
 </div>
 </div>
