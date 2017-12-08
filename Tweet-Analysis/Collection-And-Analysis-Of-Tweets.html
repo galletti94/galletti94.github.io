@@ -11776,7 +11776,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Collecting-and-Analyzing-Tweets">Collecting and Analyzing Tweets<a class="anchor-link" href="#Collecting-and-Analyzing-Tweets">&#182;</a></h1><p>To replicate my set up and run this notebook, please visit <a href="https://github.com/galletti94/Tweet-Monitor">https://github.com/galletti94/Tweet-Monitor</a></p>
-<h3 id="Let's-get-some-tweets!">Let's get some tweets!<a class="anchor-link" href="#Let's-get-some-tweets!">&#182;</a></h3><p>For this we use the twitter api which requires you to have a twitter account. Twitter gives you access keys which are unique to your account. These keys will go in a file called keys.txt which we make sure to include in the .gitignre file so that these are not made publically available. Let's get started!</p>
+<h3 id="Let's-get-some-tweets!">Let's get some tweets!<a class="anchor-link" href="#Let's-get-some-tweets!">&#182;</a></h3><p>For this we use the twitter api which requires you to have a twitter account. Twitter gives you access keys which are unique to your account. These keys will go in a file called keys.txt which we make sure to include in the .gitignore file so that these are not made publically available. Let's get started!</p>
 
 </div>
 </div>
@@ -11970,7 +11970,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>When this was written it was close to christmas so I guess the second and third emojis make sense.</p>
-<h4 id="Sentiment-Analysis">Sentiment Analysis<a class="anchor-link" href="#Sentiment-Analysis">&#182;</a></h4><p>We can analyze the words of the tweets to get a sense of whether the tweet has positive sentiment, negative sentiment or neutral sentiment. We can aggregate these and get a sense of the general mood of the US at this time of year.</p>
+<h4 id="Sentiment-Analysis">Sentiment Analysis<a class="anchor-link" href="#Sentiment-Analysis">&#182;</a></h4><p>We can analyze the words of the tweets to get a sense of whether the tweet has positive sentiment or negative sentiment. We can aggregate these and get a sense of the general mood of the US at this time of year.</p>
 
 </div>
 </div>
@@ -12034,6 +12034,85 @@ div#notebook {
 Number of Tweets =  100
 
 Number of tweets with location enabled =  95
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Seems like a majority of tweets have positive sentiment but this analysis was only conducted on a subset of the data collected since sentiment analysis is expensive to compute.</p>
+<p>Maybe next we can see which emojis are correlated with which sentiment!</p>
+<h4 id="Emoji-vs-Sentiment">Emoji vs Sentiment<a class="anchor-link" href="#Emoji-vs-Sentiment">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
+<span class="kn">from</span> <span class="nn">emoji</span> <span class="k">import</span> <span class="n">UNICODE_EMOJI</span>
+<span class="kn">from</span> <span class="nn">textblob</span> <span class="k">import</span> <span class="n">TextBlob</span>
+<span class="kn">from</span> <span class="nn">textblob.sentiments</span> <span class="k">import</span> <span class="n">NaiveBayesAnalyzer</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s1">&#39;usa_db&#39;</span><span class="p">]</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s1">&#39;usa_tweets_collection&#39;</span><span class="p">]</span>
+<span class="n">tweets_iterator</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+
+<span class="n">pos_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">neg_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">only200</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets_iterator</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">only200</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">UNICODE_EMOJI</span><span class="p">:</span>
+            <span class="n">only200</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">blob</span> <span class="o">=</span> <span class="n">TextBlob</span><span class="p">(</span><span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">analyzer</span><span class="o">=</span><span class="n">NaiveBayesAnalyzer</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">blob</span><span class="o">.</span><span class="n">sentiment</span><span class="o">.</span><span class="n">classification</span> <span class="o">==</span> <span class="s1">&#39;pos&#39;</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">pos_dict</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="n">pos_dict</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">neg_dict</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="n">neg_dict</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">pos_dict</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">pos_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">neg_dict</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">neg_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>                    
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;positive emojis = &#39;</span><span class="p">,</span> <span class="n">pos_dict</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;negative_emojis = &#39;</span><span class="p">,</span> <span class="n">neg_dict</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>positive emojis =  [(&#39;🌹&#39;, 9), (&#39;❤&#39;, 9), (&#39;✨&#39;, 8), (&#39;🎄&#39;, 6), (&#39;🎶&#39;, 6)]
+
+negative_emojis =  [(&#39;😭&#39;, 7), (&#39;🔥&#39;, 6), (&#39;💦&#39;, 4), (&#39;❣&#39;, 2), (&#39;⛓&#39;, 2)]
 </pre>
 </div>
 </div>
