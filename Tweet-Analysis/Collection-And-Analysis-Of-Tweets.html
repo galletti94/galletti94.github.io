@@ -12210,7 +12210,7 @@ location disabled emojis =  [(&#39;😂&#39;, 125), (&#39;😭&#39;, 81), (&#39;
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
@@ -12242,9 +12242,9 @@ location disabled emojis =  [(&#39;😂&#39;, 125), (&#39;😭&#39;, 81), (&#39;
 <span class="n">disabled_dict</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">disabled_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of Tweets = &#39;</span><span class="p">,</span> <span class="n">tweetcnt</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;location enabled emojis = &#39;</span><span class="p">,</span> <span class="n">enabled_dict</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;location enabled tags = &#39;</span><span class="p">,</span> <span class="n">enabled_dict</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;location disabled emojis = &#39;</span><span class="p">,</span> <span class="n">disabled_dict</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;location disabled tags = &#39;</span><span class="p">,</span> <span class="n">disabled_dict</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -12263,9 +12263,9 @@ location disabled emojis =  [(&#39;😂&#39;, 125), (&#39;😭&#39;, 81), (&#39;
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Number of Tweets =  23226
 
-location enabled emojis =  [(&#39;#job&#39;, 7322), (&#39;#CareerArc&#39;, 6157), (&#39;#Hiring&#39;, 5750), (&#39;#hiring&#39;, 2842), (&#39;#Jobs&#39;, 1996), (&#39;#Job&#39;, 1995), (&#39;#Retail&#39;, 1040), (&#39;#Hospitality&#39;, 750), (&#39;#Sales&#39;, 460), (&#39;#Nursing&#39;, 433)]
+location enabled tags =  [(&#39;#job&#39;, 7322), (&#39;#CareerArc&#39;, 6157), (&#39;#Hiring&#39;, 5750), (&#39;#hiring&#39;, 2842), (&#39;#Jobs&#39;, 1996), (&#39;#Job&#39;, 1995), (&#39;#Retail&#39;, 1040), (&#39;#Hospitality&#39;, 750), (&#39;#Sales&#39;, 460), (&#39;#Nursing&#39;, 433)]
 
-location disabled emojis =  [(&#39;#ImpeachTrump&#39;, 2), (&#39;#PokemonGO&#39;, 2), (&#39;#snow&#39;, 2), (&#39;#netneutrality&#39;, 2), (&#39;#TheResistance&#39;, 2), (&#39;#fransaskois&#39;, 1), (&#39;#TheGrandTour&#39;, 1), (&#39;#Leadership&#39;, 1), (&#39;#EndSars&#39;, 1), (&#39;#BeAChampion&#39;, 1)]
+location disabled tags =  [(&#39;#snow&#39;, 2), (&#39;#ImpeachTrump&#39;, 2), (&#39;#TheResistance&#39;, 2), (&#39;#netneutrality&#39;, 2), (&#39;#PokemonGO&#39;, 2), (&#39;#dahlia&#39;, 1), (&#39;#SugarLandTX&#39;, 1), (&#39;#loser&#39;, 1), (&#39;#BetterTogether&#39;, 1), (&#39;#GoHawks&#39;, 1)]
 </pre>
 </div>
 </div>
