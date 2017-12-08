@@ -11783,7 +11783,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">tweepy</span>
@@ -11841,7 +11841,7 @@ div#notebook {
 <span class="n">streamer</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">Stream</span><span class="p">(</span><span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">listener</span><span class="o">=</span><span class="n">listener</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tracking: &quot;</span> <span class="o">+</span> <span class="s1">&#39;United States&#39;</span><span class="p">)</span>
-<span class="n">streamer</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">locations</span><span class="o">=</span><span class="n">LOCATION</span><span class="p">)</span>
+<span class="c1">#streamer.filter(locations=LOCATION)</span>
 </pre></div>
 
 </div>
@@ -12133,7 +12133,7 @@ negative_emojis =  [(&#39;😭&#39;, 7), (&#39;🔥&#39;, 6), (&#39;💦&#39;, 4
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
@@ -12151,7 +12151,7 @@ negative_emojis =  [(&#39;😭&#39;, 7), (&#39;🔥&#39;, 6), (&#39;💦&#39;, 4
     <span class="n">tweetcnt</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]):</span>
         <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">UNICODE_EMOJI</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;coordinates&#39;</span><span class="p">]:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">enabled_dict</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
@@ -12185,11 +12185,11 @@ negative_emojis =  [(&#39;😭&#39;, 7), (&#39;🔥&#39;, 6), (&#39;💦&#39;, 4
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Number of Tweets =  21015
+<pre>Number of Tweets =  23226
 
-location enabled emojis =  [(&#39;❤&#39;, 144), (&#39;🔥&#39;, 144), (&#39;🎄&#39;, 106), (&#39;🏾&#39;, 104), (&#39;😍&#39;, 102), (&#39;🏼&#39;, 97), (&#39;😂&#39;, 88), (&#39;🏻&#39;, 79), (&#39;✨&#39;, 73), (&#39;🏽&#39;, 67)]
+location enabled emojis =  [(&#39;❤&#39;, 169), (&#39;🔥&#39;, 164), (&#39;🎄&#39;, 124), (&#39;😍&#39;, 122), (&#39;🏼&#39;, 115), (&#39;🏾&#39;, 114), (&#39;😂&#39;, 104), (&#39;🏻&#39;, 95), (&#39;🏽&#39;, 93), (&#39;✨&#39;, 81)]
 
-location disabled emojis =  [(&#39;🍌&#39;, 28), (&#39;❤&#39;, 20), (&#39;🏽&#39;, 17), (&#39;😍&#39;, 16), (&#39;🔥&#39;, 16), (&#39;😂&#39;, 16), (&#39;❄&#39;, 15), (&#39;🎄&#39;, 15), (&#39;🏼&#39;, 15), (&#39;🏻&#39;, 11)]
+location disabled emojis =  [(&#39;😂&#39;, 125), (&#39;😭&#39;, 81), (&#39;♀&#39;, 28), (&#39;🏾&#39;, 28), (&#39;🏽&#39;, 28), (&#39;😍&#39;, 27), (&#39;\U0001f926&#39;, 26), (&#39;❤&#39;, 26), (&#39;🔥&#39;, 25), (&#39;❄&#39;, 25)]
 </pre>
 </div>
 </div>
@@ -12202,14 +12202,15 @@ location disabled emojis =  [(&#39;🍌&#39;, 28), (&#39;❤&#39;, 20), (&#39;�
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Looks like people with location disabled use similar emojis to those with location enabled - the distributions of emojis, from looking at the lists above look similar. I wonder if there is a difference in what these two groups post about... Let's look at the tags in their tweets to get a sense of what these people post about!</p>
+<p>Looks like people with location disabled use in majority emojis that we evaluated earlier to be negative sentiment! Now that's very interesting!</p>
+<p>I wonder if there is a difference in what topics these two groups post about. Let's look at the tags in their tweets to get a sense of what these people post about!</p>
 <h4 id="Location-Disabled-Tweets---Tags">Location Disabled Tweets - Tags<a class="anchor-link" href="#Location-Disabled-Tweets---Tags">&#182;</a></h4>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
@@ -12226,7 +12227,7 @@ location disabled emojis =  [(&#39;🍌&#39;, 28), (&#39;❤&#39;, 20), (&#39;�
 <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets_iterator</span><span class="p">:</span>
     <span class="n">tweetcnt</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\B(\#[a-zA-Z]+\b)(?!;)&#39;</span><span class="p">,</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]):</span>
-        <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;coordinates&#39;</span><span class="p">]:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">enabled_dict</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
@@ -12260,11 +12261,11 @@ location disabled emojis =  [(&#39;🍌&#39;, 28), (&#39;❤&#39;, 20), (&#39;�
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Number of Tweets =  21015
+<pre>Number of Tweets =  23226
 
-location enabled emojis =  [(&#39;#job&#39;, 6783), (&#39;#CareerArc&#39;, 6040), (&#39;#Hiring&#39;, 5335), (&#39;#hiring&#39;, 2605), (&#39;#Jobs&#39;, 1836), (&#39;#Job&#39;, 1834), (&#39;#Retail&#39;, 974), (&#39;#Hospitality&#39;, 719), (&#39;#Sales&#39;, 424), (&#39;#CustomerService&#39;, 392)]
+location enabled emojis =  [(&#39;#job&#39;, 7322), (&#39;#CareerArc&#39;, 6157), (&#39;#Hiring&#39;, 5750), (&#39;#hiring&#39;, 2842), (&#39;#Jobs&#39;, 1996), (&#39;#Job&#39;, 1995), (&#39;#Retail&#39;, 1040), (&#39;#Hospitality&#39;, 750), (&#39;#Sales&#39;, 460), (&#39;#Nursing&#39;, 433)]
 
-location disabled emojis =  [(&#39;#job&#39;, 395), (&#39;#Hiring&#39;, 309), (&#39;#hiring&#39;, 173), (&#39;#Job&#39;, 128), (&#39;#Jobs&#39;, 127), (&#39;#Retail&#39;, 45), (&#39;#Nursing&#39;, 33), (&#39;#Sales&#39;, 31), (&#39;#Veterans&#39;, 29), (&#39;#Hospitality&#39;, 24)]
+location disabled emojis =  [(&#39;#ImpeachTrump&#39;, 2), (&#39;#PokemonGO&#39;, 2), (&#39;#snow&#39;, 2), (&#39;#netneutrality&#39;, 2), (&#39;#TheResistance&#39;, 2), (&#39;#fransaskois&#39;, 1), (&#39;#TheGrandTour&#39;, 1), (&#39;#Leadership&#39;, 1), (&#39;#EndSars&#39;, 1), (&#39;#BeAChampion&#39;, 1)]
 </pre>
 </div>
 </div>
@@ -12277,7 +12278,7 @@ location disabled emojis =  [(&#39;#job&#39;, 395), (&#39;#Hiring&#39;, 309), (&
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It looks like a majority of people from both groups tweet about similar topics. Maybe there is just considerable bias as to why people tweet in the first place and to better understand what people have location enabled and location disabled, we need to look at this problem from a different angle.</p>
+<p>It looks like tweets with location disabled don't tag very much. I will let you make your own conclusions about the content type...</p>
 <p>Let's start from a specific set of keywords and observe the distribution of location enabled vs disabled!</p>
 <h4 id="Keywords-about-Machine-Learning">Keywords about Machine Learning<a class="anchor-link" href="#Keywords-about-Machine-Learning">&#182;</a></h4>
 </div>
@@ -12361,37 +12362,47 @@ location disabled emojis =  [(&#39;#job&#39;, 395), (&#39;#Hiring&#39;, 309), (&
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As before, keep this runnning for a bit while to collect some tweets. Now we can do some more analysis:</p>
-<h3 id="More-on-location">More on location<a class="anchor-link" href="#More-on-location">&#182;</a></h3>
+<h4 id="Location-of-ML-people">Location of ML people<a class="anchor-link" href="#Location-of-ML-people">&#182;</a></h4>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
+<span class="kn">from</span> <span class="nn">emoji</span> <span class="k">import</span> <span class="n">UNICODE_EMOJI</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
 <span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s1">&#39;twitterdb&#39;</span><span class="p">]</span>
 <span class="n">collection</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s1">&#39;twitter_search&#39;</span><span class="p">]</span>
 <span class="n">tweets_iterator</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
 
+<span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 <span class="n">enabled</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">disabled</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">tweetcnt</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets_iterator</span><span class="p">:</span>
     <span class="n">tweetcnt</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]:</span>
+    
+    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]):</span>  <span class="c1">#remember emojis are characters not words</span>
+        <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">UNICODE_EMOJI</span><span class="p">:</span>
+          <span class="k">try</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+          <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    
+    <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;coordinates&#39;</span><span class="p">]:</span>
         <span class="n">enabled</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">disabled</span> <span class="o">+=</span> <span class="mi">1</span>
-        
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of Tweets = &#39;</span><span class="p">,</span> <span class="n">tweetcnt</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;with location enabled = &#39;</span><span class="p">,</span> <span class="n">enabled</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;with location disabled = &#39;</span><span class="p">,</span> <span class="n">disabled</span><span class="p">)</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Total Tweets = &#39;</span><span class="p">,</span> <span class="n">tweetcnt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;location enabled = &#39;</span><span class="p">,</span> <span class="n">enabled</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;location disabled = &#39;</span><span class="p">,</span> <span class="n">disabled</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;emojis = &#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12408,11 +12419,10 @@ location disabled emojis =  [(&#39;#job&#39;, 395), (&#39;#Hiring&#39;, 309), (&
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Number of Tweets =  1019
-
-with location enabled =  719
-
-with location disabled =  300
+<pre>Total Tweets =  1019
+location enabled =  0
+location disabled =  1019
+emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39;👀&#39;, 1), (&#39;™&#39;, 1), (&#39;📦&#39;, 1), (&#39;📢&#39;, 1), (&#39;🐸&#39;, 1), (&#39;📣&#39;, 1), (&#39;▶&#39;, 1), (&#39;🏽&#39;, 1), (&#39;®&#39;, 1), (&#39;📈&#39;, 1), (&#39;🚨&#39;, 1), (&#39;🌐&#39;, 1)]
 </pre>
 </div>
 </div>
@@ -12420,6 +12430,15 @@ with location disabled =  300
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Looks like people who post about these keywords don't share their location! Interesting emojis as well!</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
