@@ -11776,7 +11776,8 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Collecting-and-Analyzing-Tweets">Collecting and Analyzing Tweets<a class="anchor-link" href="#Collecting-and-Analyzing-Tweets">&#182;</a></h1><p>To replicate my set up and run this notebook, please visit <a href="https://github.com/galletti94/Tweet-Monitor">https://github.com/galletti94/Tweet-Monitor</a></p>
-<h3 id="Let's-get-some-tweets!">Let's get some tweets!<a class="anchor-link" href="#Let's-get-some-tweets!">&#182;</a></h3><p>For this we use the twitter api which requires you to have a twitter account. Twitter gives you access keys which are unique to your account. These keys will go in a file called keys.txt which we make sure to include in the .gitignore file so that these are not made publically available. Let's get started!</p>
+<h2 id="Exploratory-Data-Analysis">Exploratory Data Analysis<a class="anchor-link" href="#Exploratory-Data-Analysis">&#182;</a></h2><p>I love exploring data! It is such an important first step because, as you will see, it gives us intuition about what models may or may not work and why, when we try learning from the data later.</p>
+<h3 id="Let's-get-some-tweets!">Let's get some tweets!<a class="anchor-link" href="#Let's-get-some-tweets!">&#182;</a></h3><p>For this step we use the twitter API which requires you to have a twitter account. Twitter gives you access keys which are unique to your account. These keys will go in a file called keys.txt which we make sure to include in the .gitignore file so that these are not made publically available. Let's get started!</p>
 
 </div>
 </div>
@@ -11874,7 +11875,7 @@ div#notebook {
 <p>Awesome - now we can let this run and collect some tweets!</p>
 <p>After waiting a few minutes for your database to fill up, you can hit CTRL + C to stop the collection and stop the program.</p>
 <h3 id="What-do-we-have-here?">What do we have here?<a class="anchor-link" href="#What-do-we-have-here?">&#182;</a></h3><p>Let's take a look at the tweets we collected!</p>
-<h4 id="Where-are-in-the-US-are-these-tweets-coming-from?">Where are in the US are these tweets coming from?<a class="anchor-link" href="#Where-are-in-the-US-are-these-tweets-coming-from?">&#182;</a></h4><p>We can use folium to map the coordinates of the tweets on a map:</p>
+<h3 id="Where-are-in-the-US-are-these-tweets-coming-from?">Where are in the US are these tweets coming from?<a class="anchor-link" href="#Where-are-in-the-US-are-these-tweets-coming-from?">&#182;</a></h3><p>We can use folium to map the coordinates of the tweets on a map:</p>
 
 </div>
 </div>
@@ -11912,7 +11913,7 @@ div#notebook {
 <p>Running the above and opening map.html in a browser gives the following:</p>
 <p><img src="./tweetsUSA.jpg" alt="Image"></p>
 <p>Nice. Let's look at what kinds of emojis people use!</p>
-<h4 id="Emojis">Emojis<a class="anchor-link" href="#Emojis">&#182;</a></h4>
+<h3 id="Emojis">Emojis<a class="anchor-link" href="#Emojis">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -11970,7 +11971,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>When this was written it was close to christmas so I guess the second and third emojis make sense.</p>
-<h4 id="Sentiment-Analysis">Sentiment Analysis<a class="anchor-link" href="#Sentiment-Analysis">&#182;</a></h4><p>We can analyze the words of the tweets to get a sense of whether the tweet has positive sentiment or negative sentiment. We can aggregate these and get a sense of the general mood of the US at this time of year.</p>
+<h3 id="Sentiment-Analysis">Sentiment Analysis<a class="anchor-link" href="#Sentiment-Analysis">&#182;</a></h3><p>We can analyze the words of the tweets to get a sense of whether the tweet has positive sentiment or negative sentiment. We can aggregate these and get a sense of the general mood of the US at this time of year.</p>
 
 </div>
 </div>
@@ -12048,7 +12049,7 @@ Number of tweets with location enabled =  95
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Seems like a majority of tweets have positive sentiment but this analysis was only conducted on a subset of the data collected since sentiment analysis is expensive to compute.</p>
 <p>Maybe next we can see which emojis are correlated with which sentiment!</p>
-<h4 id="Emoji-vs-Sentiment">Emoji vs Sentiment<a class="anchor-link" href="#Emoji-vs-Sentiment">&#182;</a></h4>
+<h3 id="Emoji-vs-Sentiment">Emoji vs Sentiment<a class="anchor-link" href="#Emoji-vs-Sentiment">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -12126,7 +12127,7 @@ negative_emojis =  [(&#39;😭&#39;, 7), (&#39;🔥&#39;, 6), (&#39;💦&#39;, 4
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Great! It seems intuitive that a rose, a heart, and stars be associated with positive sentiment and a crying face would be associated with negative sentiment. It is good to see these results support our intuition!</p>
 <p>Now we would like to know what kinds of tweets do people with location disabled make?</p>
-<h4 id="Location-Disabled-Tweets---Emojis">Location Disabled Tweets - Emojis<a class="anchor-link" href="#Location-Disabled-Tweets---Emojis">&#182;</a></h4><p>First let's look at the kinds of emojis are used in both groups.</p>
+<h3 id="Location-Disabled-Tweets---Emojis">Location Disabled Tweets - Emojis<a class="anchor-link" href="#Location-Disabled-Tweets---Emojis">&#182;</a></h3><p>First let's look at the kinds of emojis are used in both groups.</p>
 
 </div>
 </div>
@@ -12204,7 +12205,7 @@ location disabled emojis =  [(&#39;😂&#39;, 125), (&#39;😭&#39;, 81), (&#39;
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Looks like people with location disabled use in majority emojis that we evaluated earlier to be negative sentiment! Now that's very interesting!</p>
 <p>I wonder if there is a difference in what topics these two groups post about. Let's look at the tags in their tweets to get a sense of what these people post about!</p>
-<h4 id="Location-Disabled-Tweets---Tags">Location Disabled Tweets - Tags<a class="anchor-link" href="#Location-Disabled-Tweets---Tags">&#182;</a></h4>
+<h3 id="Location-Disabled-Tweets---Tags">Location Disabled Tweets - Tags<a class="anchor-link" href="#Location-Disabled-Tweets---Tags">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -12280,7 +12281,7 @@ location disabled tags =  [(&#39;#snow&#39;, 2), (&#39;#ImpeachTrump&#39;, 2), (
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It looks like tweets with location disabled don't tag very much. I will let you make your own conclusions about the content type...</p>
 <p>Let's start from a specific set of keywords and observe the distribution of location enabled vs disabled!</p>
-<h4 id="Keywords-about-Machine-Learning">Keywords about Machine Learning<a class="anchor-link" href="#Keywords-about-Machine-Learning">&#182;</a></h4>
+<h3 id="Keywords-about-Machine-Learning">Keywords about Machine Learning<a class="anchor-link" href="#Keywords-about-Machine-Learning">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -12362,7 +12363,7 @@ location disabled tags =  [(&#39;#snow&#39;, 2), (&#39;#ImpeachTrump&#39;, 2), (
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As before, keep this runnning for a bit while to collect some tweets. Now we can do some more analysis:</p>
-<h4 id="Location-of-ML-people">Location of ML people<a class="anchor-link" href="#Location-of-ML-people">&#182;</a></h4>
+<h3 id="Location-of-ML-people">Location of ML people<a class="anchor-link" href="#Location-of-ML-people">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -12437,7 +12438,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Looks like people who post about these keywords don't share their location! Interesting emojis as well!</p>
 <p>Going back to USA tweets, we can analyze the source of the tweet to understand what people post about on which device for example. First we will look at the distribution of devices, then we can plot these and finally look at what emojis and tags are used with each.</p>
-<h4 id="Source-of-Tweets">Source of Tweets<a class="anchor-link" href="#Source-of-Tweets">&#182;</a></h4>
+<h3 id="Source-of-Tweets">Source of Tweets<a class="anchor-link" href="#Source-of-Tweets">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -12494,7 +12495,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's map some of these!</p>
-<h4 id="Map-of-devices">Map of devices<a class="anchor-link" href="#Map-of-devices">&#182;</a></h4>
+<h3 id="Map-of-devices">Map of devices<a class="anchor-link" href="#Map-of-devices">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -12530,7 +12531,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="./tweetsUSA2.jpg" alt="Image"></p>
-<p>It is interesting to note that many people who use this feature have their location enabled. If we now plot the tweets made on iPhone, the results are drastically different.</p>
+<p>It is interesting to note that many people who use this feature have their location enabled. If we now plot the tweets made on the Twitter App for iPhone, the results are drastically different. Are your location settings application dependent? That is, if you share an instagram post on twitter, is your location setting that of instagram or that of twitter? Someone should test this out!</p>
 <p><img src="./tweetsUSA3.jpg" alt="Image"></p>
 
 </div>
