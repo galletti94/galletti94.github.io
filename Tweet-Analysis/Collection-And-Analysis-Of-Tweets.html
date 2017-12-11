@@ -12254,7 +12254,7 @@ location disabled tags =  [(&#39;#snow&#39;, 2), (&#39;#ImpeachTrump&#39;, 2), (
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It looks like tweets with location disabled don't tag very much. I will let you make your own conclusions about the content type...</p>
-<p>Let's start from a specific set of keywords and observe the distribution of location enabled vs disabled!</p>
+<p>To get a better idea of what topics people with location enables and disabled tweet about, we can turn the problem around. Let's start from a specific set of keywords and observe the distribution of location enabled vs disabled!</p>
 <h3 id="Keywords-about-Machine-Learning">Keywords about Machine Learning<a class="anchor-link" href="#Keywords-about-Machine-Learning">&#182;</a></h3>
 </div>
 </div>
@@ -12336,7 +12336,8 @@ location disabled tags =  [(&#39;#snow&#39;, 2), (&#39;#ImpeachTrump&#39;, 2), (
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As before, keep this runnning for a bit while to collect some tweets. Now we can do some more analysis:</p>
+<p>As before, keep this runnning for a short while in order to collect some tweets.</p>
+<p>Let's keep exploring!</p>
 <h3 id="Location-of-ML-people">Location of ML people<a class="anchor-link" href="#Location-of-ML-people">&#182;</a></h3>
 </div>
 </div>
@@ -12409,9 +12410,10 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Looks like people who post about these keywords don't share their location! Interesting emojis as well!</p>
-<p>Going back to USA tweets, we can analyze the source of the tweet to understand what people post about on which device for example. First we will look at the distribution of devices, then we can plot these and finally look at what emojis and tags are used with each.</p>
-<h3 id="Source-of-Tweets">Source of Tweets<a class="anchor-link" href="#Source-of-Tweets">&#182;</a></h3>
+<p>Looks like people who post about these keywords don't share their location! Interesting emojis as well! At this point, we can try other combinations of words that we have intuition for whether location should be enabled or disabled. But we will not do this here and instead we will keep exploring more broadly.</p>
+<h3 id="Source-of-Tweets">Source of Tweets<a class="anchor-link" href="#Source-of-Tweets">&#182;</a></h3><p>Going back to USA tweets, we can analyze the source of the tweet to understand what people post about on which device for example. We can also look at whether a person's location is more likely to be enabled or disabled depending on the device they use.</p>
+<p>Let's first take a look at the distribution of devices.</p>
+
 </div>
 </div>
 </div>
@@ -12467,7 +12469,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's map some of these!</p>
+<p>Now we can map some of these devices (if location is enabled) and start developing intuition about which devices are more prone to enable location. Let's start mapping!</p>
 <h3 id="Map-of-devices">Map of devices<a class="anchor-link" href="#Map-of-devices">&#182;</a></h3>
 </div>
 </div>
@@ -12498,10 +12500,10 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="./tweetsUSA2.jpg" alt="Image"></p>
-<p>It is interesting to note that many people who use this feature have their location enabled. If we now plot the tweets made on the Twitter App for iPhone, the results are drastically different. Are your location settings application dependent? That is, if you share an instagram post on twitter, is your location setting that of instagram or that of twitter? Someone should test this out!</p>
+<p>It is interesting to note that many people who use this feature have their location enabled. If we now plot the tweets made on the Twitter App for iPhone, the results are drastically different. But Instagram is also an application available on iPhone. Are your location settings application dependent? That is, if you share an instagram post on twitter, is your location setting that of instagram or that of twitter? And does this vary per device? Someone should test this out!</p>
 <p><img src="./tweetsUSA3.jpg" alt="Image"></p>
-<p>Let's see if we can predict whether location is enabled or disabled based on the emojis used!</p>
-<h2 id="Learning">Learning<a class="anchor-link" href="#Learning">&#182;</a></h2><p>First we create a table where the columns are emojis and the rows are specific tweets. An element of this table wll be 1 if the tweet contains the emoji of the given column and 0 otherwise. We can then do some linear algebra stuff to see which combinations of emojis contribute the most to the information of the table.</p>
+<p>Now that we have explored some areas of these tweets we have collected an gained some intuition about what people tweet, where, how, and why, we can try and solve a concrete problem. I am particularly interested in seeing whether it is possible to predict if someone's location is enabled or disabled based on the emojis they use. Let's find out!</p>
+<h2 id="Learning">Learning<a class="anchor-link" href="#Learning">&#182;</a></h2><p>First we create a table where the columns are emojis and the rows are specific tweets. An element of this table wll be 1 if the tweet contains the emoji of the given column and 0 otherwise. We can then do some linear algebra to see which combinations of emojis contribute the most to the information of the table.</p>
 <h3 id="SVD">SVD<a class="anchor-link" href="#SVD">&#182;</a></h3>
 </div>
 </div>
@@ -12525,11 +12527,11 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 
 <span class="n">tweets_iterator</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">emo</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
-  <span class="n">i</span> <span class="o">=</span> <span class="mi">20000</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">20000</span>      <span class="c1">#This is to limit the amount of tweets we store in our table</span>
   <span class="n">emoji_presence</span> <span class="o">=</span> <span class="p">[]</span>
   <span class="n">tweets_iterator</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
   <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets_iterator</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">1000</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">1000</span><span class="p">:</span>   <span class="c1">#Only get the last 4000 or so tweets</span>
       <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">emo</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]:</span>
         <span class="n">emoji_presence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
       <span class="k">else</span><span class="p">:</span>
@@ -12550,7 +12552,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Success! We created the table and stored it into a file so that we don't have to do this computation again. We only took a subset of tweets (about 4000 or so) so that we can get a general idea relatively quickly and not waste time running our code for 3 days. Now that we have this subset of data, we can study this table. We will decompose the table into singular vectors and singular values which represent combinations of emojis and more or less how much information they bring to the table (pun intended). You can read more about SVD <a href="https://en.wikipedia.org/wiki/Singular-value_decomposition">here</a></p>
+<p>Success! We created the table and stored it into a file so that we don't have to do this computation again. We only took a subset of tweets (about 4000) so that we can get a general idea relatively quickly and not waste time running our code for 3 days. Now that we have this subset of data, we can study this table. We will decompose the table into singular vectors and singular values which represent combinations of emojis and more or less how much information they bring to the table (pun intended). You can read more about SVD <a href="https://en.wikipedia.org/wiki/Singular-value_decomposition">here</a></p>
 
 </div>
 </div>
@@ -12572,7 +12574,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 
 <span class="n">A</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
 
-<span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>  <span class="c1">#sv decompostion</span>
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="n">sing_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_vars</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
@@ -12627,6 +12629,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">PCA</span> <span class="k">as</span> <span class="n">sklearnPCA</span>
 <span class="n">tweets_iterator</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
 
+<span class="c1"># Get the Y vector of location enabled/disabled</span>
 <span class="n">i</span> <span class="o">=</span> <span class="mi">20000</span>
 <span class="n">location</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets_iterator</span><span class="p">:</span>
@@ -12637,6 +12640,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
       <span class="n">location</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
   <span class="n">i</span><span class="o">-=</span><span class="mi">1</span>
 
+<span class="c1">#Extract the first 100 principal components</span>
 <span class="n">sklearn_pca</span> <span class="o">=</span> <span class="n">sklearnPCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">sklearn_pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">location</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4226</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -12767,7 +12771,8 @@ How good are these predictions?
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Interesting. Seems like predicting location from emojis using this particular Neural Network did not give great results - good thing we didn't gamble with the entire dataset! Let's try a different approach. This is essentially a separation problem, i.e. can we separate the space such that one side has location enabled and the other has location disabled? Let's try SVMs!</p>
+<p>Interesting. Seems like predicting location from emojis using this particular Neural Network did not give great results - good thing we didn't gamble with the entire dataset! Their are many other types of Neural Networks we could try but for the sake of exploration, let's try a different approach.</p>
+<p>Notice that this problem is essentially a separation problem, i.e. can we separate the space of emojis such that one side has location enabled and the other has location disabled? Let's try Support Vector Machines (SVMs)!</p>
 <h3 id="SVM">SVM<a class="anchor-link" href="#SVM">&#182;</a></h3><p>For visualization sake, we will only use the first 2 singular vectors we found above.</p>
 
 </div>
