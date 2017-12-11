@@ -11776,7 +11776,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Collecting-and-Analyzing-Tweets">Collecting and Analyzing Tweets<a class="anchor-link" href="#Collecting-and-Analyzing-Tweets">&#182;</a></h1><p>To replicate my set up and run this notebook, please visit <a href="https://github.com/galletti94/Tweet-Monitor">https://github.com/galletti94/Tweet-Monitor</a></p>
-<h2 id="Exploratory-Data-Analysis">Exploratory Data Analysis<a class="anchor-link" href="#Exploratory-Data-Analysis">&#182;</a></h2><p>I love exploring data! It is such an important first step because, as you will see, it gives us intuition about what models may or may not work and why, when we try learning from the data later.</p>
+<h2 id="Exploratory-Data-Analysis">Exploratory Data Analysis<a class="anchor-link" href="#Exploratory-Data-Analysis">&#182;</a></h2><p>I love exploring data! As you will see, taking the time to explore the data and develop some intuition about what we have collected will make us much more producive during the analysis and modeling phase. We will be able to quickly understand why some models fail and identify what next steps should be taken. Let's get started!</p>
 <h3 id="Let's-get-some-tweets!">Let's get some tweets!<a class="anchor-link" href="#Let's-get-some-tweets!">&#182;</a></h3><p>For this step we use the twitter API which requires you to have a twitter account. Twitter gives you access keys which are unique to your account. These keys will go in a file called keys.txt which we make sure to include in the .gitignore file so that these are not made publically available. Let's get started!</p>
 
 </div>
@@ -11784,7 +11784,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">tweepy</span>
@@ -11882,7 +11882,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
@@ -11919,12 +11919,13 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">emoji</span> <span class="k">import</span> <span class="n">UNICODE_EMOJI</span>
 
 <span class="n">tweets_iterator</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+
 <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets_iterator</span><span class="p">:</span>
@@ -11953,7 +11954,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[(&#39;❤&#39;, 164), (&#39;🔥&#39;, 160), (&#39;🎄&#39;, 121), (&#39;😍&#39;, 118), (&#39;🏾&#39;, 112), (&#39;🏼&#39;, 112), (&#39;😂&#39;, 104), (&#39;🏻&#39;, 90), (&#39;🏽&#39;, 81), (&#39;✨&#39;, 79), (&#39;🙌&#39;, 68), (&#39;💪&#39;, 67), (&#39;💯&#39;, 62), (&#39;🙏&#39;, 60), (&#39;❄&#39;, 60)]
+<pre>[(&#39;😂&#39;, 229), (&#39;❤&#39;, 195), (&#39;🔥&#39;, 189), (&#39;😍&#39;, 149), (&#39;🏾&#39;, 142), (&#39;🏼&#39;, 134), (&#39;🎄&#39;, 126), (&#39;🏽&#39;, 121), (&#39;🏻&#39;, 111), (&#39;😭&#39;, 100), (&#39;❄&#39;, 97), (&#39;✨&#39;, 83), (&#39;🙌&#39;, 80), (&#39;♀&#39;, 78), (&#39;🙏&#39;, 75)]
 </pre>
 </div>
 </div>
@@ -11966,7 +11967,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>When this was written it was close to christmas so I guess the second and third emojis make sense.</p>
+<p>When this was written it was close to christmas so the christmas tree and snow flakes emojis make sense.</p>
 <h3 id="Sentiment-Analysis">Sentiment Analysis<a class="anchor-link" href="#Sentiment-Analysis">&#182;</a></h3><p>We can analyze the words of the tweets to get a sense of whether the tweet has positive sentiment or negative sentiment. We can aggregate these and get a sense of the general mood of the US at this time of year.</p>
 
 </div>
@@ -12502,7 +12503,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 <p><img src="./tweetsUSA2.jpg" alt="Image"></p>
 <p>It is interesting to note that many people who use this feature have their location enabled. If we now plot the tweets made on the Twitter App for iPhone, the results are drastically different. But Instagram is also an application available on iPhone. Are your location settings application dependent? That is, if you share an instagram post on twitter, is your location setting that of instagram or that of twitter? And does this vary per device? Someone should test this out!</p>
 <p><img src="./tweetsUSA3.jpg" alt="Image"></p>
-<p>Now that we have explored some areas of these tweets we have collected an gained some intuition about what people tweet, where, how, and why, we can try and solve a concrete problem. I am particularly interested in seeing whether it is possible to predict if someone's location is enabled or disabled based on the emojis they use. Let's find out!</p>
+<p>Now that we have explored the tweets we have collected and gained some intuition about what people tweet, where, how, and why, we can try and solve a concrete problem. I am particularly interested in seeing whether it is possible to predict if someone's location is enabled or disabled based on the emojis they use. Let's find out!</p>
 <h2 id="Learning">Learning<a class="anchor-link" href="#Learning">&#182;</a></h2><p>First we create a table where the columns are emojis and the rows are specific tweets. An element of this table will be 1 if the tweet contains the emoji of the given column and 0 otherwise. (Note: A different approach could be to have the elements represent the frequency with which each emoji appears in a given tweet). We can then do some linear algebra to see which combinations of emojis contribute the most to the information of the table.</p>
 <h3 id="SVD">SVD<a class="anchor-link" href="#SVD">&#182;</a></h3>
 </div>
