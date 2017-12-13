@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script>L_PREFER_CANVAS = false; L_NO_TOUCH = false; L_DISABLE_3D = false;</script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+    <link rel="stylesheet" href="https://rawgit.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css" />
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <style> #map_813f71684d3e44d49fafbb21aa3197fe {
+                position : relative;
+                width : 100.0%;
+                height: 100.0%;
+                left: 0.0%;
+                top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_813f71684d3e44d49fafbb21aa3197fe" ></div>
+        
+</body>
+<script>    
+    
+
+            
+                var bounds = null;
+            
+
+            var map_813f71684d3e44d49fafbb21aa3197fe = L.map(
+                                  'map_813f71684d3e44d49fafbb21aa3197fe',
+                                  {center: [28.292,-81.4076],
+                                  zoom: 7,
+                                  maxBounds: bounds,
+                                  layers: [],
+                                  worldCopyJump: false,
+                                  crs: L.CRS.EPSG3857
+                                 });
+            
+        
+    
+            var tile_layer_eaf40fe0f3c74b35b8196d16e024a30a = L.tileLayer(
+                'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                {
+  "attribution": null,
+  "detectRetina": false,
+  "maxZoom": 18,
+  "minZoom": 1,
+  "noWrap": false,
+  "subdomains": "abc"
+}
+                ).addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+        
+    
+
+            var marker_710c1ae93237493cbcfe1dfe1d76492d = L.marker(
+                [26.4591,-80.083],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_e77a158e20274916a0f2654df28f6931 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/revolving-hearts_1f49e.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_710c1ae93237493cbcfe1dfe1d76492d.setIcon(custom_icon_e77a158e20274916a0f2654df28f6931);
+            
+    
+
+            var marker_3fa63c654abb45d6a99600527f5c562f = L.marker(
+                [26.4591,-80.083],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_b22071a512324630816ab51953a7186f = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/two-hearts_1f495.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_3fa63c654abb45d6a99600527f5c562f.setIcon(custom_icon_b22071a512324630816ab51953a7186f);
+            
+    
+
+            var marker_16be56d9df8e47bf90f60a9c05c4a1a4 = L.marker(
+                [26.09026713,-80.37040337],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_2360d25c74e94af69b28a6c26209490d = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/christmas-tree_1f384.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_16be56d9df8e47bf90f60a9c05c4a1a4.setIcon(custom_icon_2360d25c74e94af69b28a6c26209490d);
+            
+    
+
+            var marker_92d104c164c44975bdcef0e927eac95c = L.marker(
+                [26.09026713,-80.37040337],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_ce453e8916ca472e9d69c15d4ac2fe49 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/sparkles_2728.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_92d104c164c44975bdcef0e927eac95c.setIcon(custom_icon_ce453e8916ca472e9d69c15d4ac2fe49);
+            
+    
+
+            var marker_21c8e1ffed75480384ea5d8e560f09ee = L.marker(
+                [30.33,-81.65],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_46bc50a40fad466f8c0a673c414d9013 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/fire_1f525.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_21c8e1ffed75480384ea5d8e560f09ee.setIcon(custom_icon_46bc50a40fad466f8c0a673c414d9013);
+            
+    
+
+            var marker_5327137aae5b4a3bb4ef80a4ead8b495 = L.marker(
+                [25.8006,-80.199],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_4b3c7848187049aa812d7f232b55199a = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/flexed-biceps_1f4aa.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_5327137aae5b4a3bb4ef80a4ead8b495.setIcon(custom_icon_4b3c7848187049aa812d7f232b55199a);
+            
+    
+
+            var marker_ad3b14d1f2194b1db9c2718e74b67fc0 = L.marker(
+                [25.8006,-80.199],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_e400ed78177845918513caf97fefc848 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/emoji-modifier-fitzpatrick-type-5_1f3fe.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_ad3b14d1f2194b1db9c2718e74b67fc0.setIcon(custom_icon_e400ed78177845918513caf97fefc848);
+            
+    
+
+            var marker_77e5ed2127fe4731b64cfa749ccca41b = L.marker(
+                [25.6578293,-80.4309998],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_4826d3a2312f4226aa8016f8d511afef = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/black-heart_1f5a4.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_77e5ed2127fe4731b64cfa749ccca41b.setIcon(custom_icon_4826d3a2312f4226aa8016f8d511afef);
+            
+    
+
+            var marker_8e6e3dcf881e41f6a32f47eac443a11a = L.marker(
+                [28.47888889,-82.54777778],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_608ccc5cf79949a58f8c18431da0a8ec = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/growing-heart_1f497.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_8e6e3dcf881e41f6a32f47eac443a11a.setIcon(custom_icon_608ccc5cf79949a58f8c18431da0a8ec);
+            
+    
+
+            var marker_39871df46e874cfcbc1214bf5c7c5b02 = L.marker(
+                [25.7877,-80.2241],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_7a21f3fe5cfb4dff93d2d36edf8d5f9f = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/emoji-modifier-fitzpatrick-type-5_1f3fe.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_39871df46e874cfcbc1214bf5c7c5b02.setIcon(custom_icon_7a21f3fe5cfb4dff93d2d36edf8d5f9f);
+            
+    
+
+            var marker_a052d27f2f5c4a2787a81bf75b524cbd = L.marker(
+                [29.28345,-81.05935],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_0fd9c34cd9cf4b189ba413a78abfd12d = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/flexed-biceps_1f4aa.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_a052d27f2f5c4a2787a81bf75b524cbd.setIcon(custom_icon_0fd9c34cd9cf4b189ba413a78abfd12d);
+            
+    
+
+            var marker_39c0a3684c5d4f249646e1a0334486b6 = L.marker(
+                [24.5537,-81.79895],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_d76cc50b85cd45108158d25662ae2f45 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/emoji-modifier-fitzpatrick-type-1-2_1f3fb.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_39c0a3684c5d4f249646e1a0334486b6.setIcon(custom_icon_d76cc50b85cd45108158d25662ae2f45);
+            
+    
+
+            var marker_1624ad879a2c4797ba1ef1f1a8e6369d = L.marker(
+                [25.69766,-80.163681],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_ceb056f86d7740cdbd0a702d7aea5236 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/heavy-black-heart_2764.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_1624ad879a2c4797ba1ef1f1a8e6369d.setIcon(custom_icon_ceb056f86d7740cdbd0a702d7aea5236);
+            
+    
+
+            var marker_312b786caba44154a6eb47bee7b6a00e = L.marker(
+                [29.28345,-81.05935],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_07c7b77c77ac44d289f005f89c447183 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/emoji-modifier-fitzpatrick-type-3_1f3fc.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_312b786caba44154a6eb47bee7b6a00e.setIcon(custom_icon_07c7b77c77ac44d289f005f89c447183);
+            
+    
+
+            var marker_97d2d0976617465b8655fb6bb654a3db = L.marker(
+                [24.5537,-81.79895],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_1dad1a7c87474ae3850499ecbd5173b0 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/emoji-modifier-fitzpatrick-type-4_1f3fd.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_97d2d0976617465b8655fb6bb654a3db.setIcon(custom_icon_1dad1a7c87474ae3850499ecbd5173b0);
+            
+    
+
+            var marker_a664a345d4994a5db101dc39bb97bd1c = L.marker(
+                [26.124354,-80.249503],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_0cbe1825ebdc408194867503cceade8e = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/face-with-tears-of-joy_1f602.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_a664a345d4994a5db101dc39bb97bd1c.setIcon(custom_icon_0cbe1825ebdc408194867503cceade8e);
+            
+    
+
+            var marker_e2bbe99d52804f1c8af64550f9e34226 = L.marker(
+                [25.7877,-80.2241],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_5f1815312ac14fccb87bad03e32a5bf3 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/eyes_1f440.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_e2bbe99d52804f1c8af64550f9e34226.setIcon(custom_icon_5f1815312ac14fccb87bad03e32a5bf3);
+            
+    
+
+            var marker_669f0afa1a4043c2886ee268981bd2e4 = L.marker(
+                [25.7282,-80.271],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_00b0c5ab4d1742a38597f8fc97ac85c6 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/basketball-and-hoop_1f3c0.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_669f0afa1a4043c2886ee268981bd2e4.setIcon(custom_icon_00b0c5ab4d1742a38597f8fc97ac85c6);
+            
+    
+
+            var marker_fd28c097339f48d1a39e3a8ec15ee296 = L.marker(
+                [29.28345,-81.05935],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_74672ba2dd9c4e7cb1124c343d922699 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/person-raising-both-hands-in-celebration_1f64c.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_fd28c097339f48d1a39e3a8ec15ee296.setIcon(custom_icon_74672ba2dd9c4e7cb1124c343d922699);
+            
+    
+
+            var marker_e381c45f71754298a1b069896e73493c = L.marker(
+                [27.1117188,-82.4639863],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_bcc7ade1b8fa4e869154c6a1c8e2fed1 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/christmas-tree_1f384.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_e381c45f71754298a1b069896e73493c.setIcon(custom_icon_bcc7ade1b8fa4e869154c6a1c8e2fed1);
+            
+    
+
+            var marker_32e6cfdc4b5f4933be243efff12d5499 = L.marker(
+                [28.6761,-81.5106],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_2cc4f6de48834ef1913ab2df41d5ed28 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/smiling-face-with-sunglasses_1f60e.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_32e6cfdc4b5f4933be243efff12d5499.setIcon(custom_icon_2cc4f6de48834ef1913ab2df41d5ed28);
+            
+    
+
+            var marker_735c25ac95ac423997cb5c95b303e890 = L.marker(
+                [26.124354,-80.249503],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_3ef7fe4e2bcd423fa2b8bc96cc7f2435 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/hundred-points-symbol_1f4af.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_735c25ac95ac423997cb5c95b303e890.setIcon(custom_icon_3ef7fe4e2bcd423fa2b8bc96cc7f2435);
+            
+    
+
+            var marker_11956e689aa1451bac35c6d20093849a = L.marker(
+                [27.1117188,-82.4639863],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_30e7f9a8c4c042ea88273eef5a96f999 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/heavy-heart-exclamation-mark-ornament_2763.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_11956e689aa1451bac35c6d20093849a.setIcon(custom_icon_30e7f9a8c4c042ea88273eef5a96f999);
+            
+    
+
+            var marker_2d089f4528804f2ba76e1128514a39a5 = L.marker(
+                [27.9709,-82.4646],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_4ef2e247ae3b470a8b31025eb20be455 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/wrapped-present_1f381.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_2d089f4528804f2ba76e1128514a39a5.setIcon(custom_icon_4ef2e247ae3b470a8b31025eb20be455);
+            
+    
+
+            var marker_b42f120cf56248fe9aa7716e4055fe53 = L.marker(
+                [25.7282,-80.271],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_f7916d9783d14a50875ca2938715c228 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/two-hearts_1f495.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_b42f120cf56248fe9aa7716e4055fe53.setIcon(custom_icon_f7916d9783d14a50875ca2938715c228);
+            
+    
+
+            var marker_2012778b527f48239286673d9c04bc5d = L.marker(
+                [25.7877,-80.2241],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(map_813f71684d3e44d49fafbb21aa3197fe);
+            
+    
+
+                var custom_icon_4fd274bcf58c4c0486850186a75f2309 = L.icon({
+                    iconUrl: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/person-with-folded-hands_1f64f.png',
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    });
+                marker_2012778b527f48239286673d9c04bc5d.setIcon(custom_icon_4fd274bcf58c4c0486850186a75f2309);
+            
+</script>
