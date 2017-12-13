@@ -11968,6 +11968,165 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>When this was written it was close to christmas so the christmas tree and snow flakes emojis make sense.</p>
+<p>Let's put these emojis on the map so that we can view the popular emojis per state!</p>
+<h3 id="Mapping-Emojis">Mapping Emojis<a class="anchor-link" href="#Mapping-Emojis">&#182;</a></h3><p>First we need to find the popular emojis per state</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">emoji</span> <span class="k">import</span> <span class="n">UNICODE_EMOJI</span>
+<span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">USA</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Alabama&#39;</span><span class="p">,</span><span class="s1">&#39;AL&#39;</span><span class="p">,</span><span class="s1">&#39;Montana&#39;</span><span class="p">,</span><span class="s1">&#39;MT&#39;</span><span class="p">,</span><span class="s1">&#39;Alaska&#39;</span><span class="p">,</span><span class="s1">&#39;AK&#39;</span><span class="p">,</span><span class="s1">&#39;Nebraska&#39;</span><span class="p">,</span><span class="s1">&#39;NE&#39;</span><span class="p">,</span><span class="s1">&#39;Arizona&#39;</span><span class="p">,</span><span class="s1">&#39;AZ&#39;</span><span class="p">,</span><span class="s1">&#39;Nevada&#39;</span><span class="p">,</span><span class="s1">&#39;NV&#39;</span><span class="p">,</span><span class="s1">&#39;Arkansas&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;AR&#39;</span><span class="p">,</span><span class="s1">&#39;New Hampshire&#39;</span><span class="p">,</span><span class="s1">&#39;NH&#39;</span><span class="p">,</span><span class="s1">&#39;California&#39;</span><span class="p">,</span><span class="s1">&#39;CA&#39;</span><span class="p">,</span><span class="s1">&#39;New Jersey&#39;</span><span class="p">,</span><span class="s1">&#39;NJ&#39;</span><span class="p">,</span><span class="s1">&#39;Colorado&#39;</span><span class="p">,</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span><span class="s1">&#39;New Mexico&#39;</span><span class="p">,</span><span class="s1">&#39;NM&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Connecticut&#39;</span><span class="p">,</span><span class="s1">&#39;CT&#39;</span><span class="p">,</span><span class="s1">&#39;New York&#39;</span><span class="p">,</span><span class="s1">&#39;NY&#39;</span><span class="p">,</span><span class="s1">&#39;Delaware&#39;</span><span class="p">,</span><span class="s1">&#39;DE&#39;</span><span class="p">,</span><span class="s1">&#39;North Carolina&#39;</span><span class="p">,</span><span class="s1">&#39;NC&#39;</span><span class="p">,</span><span class="s1">&#39;Florida&#39;</span><span class="p">,</span><span class="s1">&#39;FL&#39;</span><span class="p">,</span><span class="s1">&#39;North Dakota&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;ND&#39;</span><span class="p">,</span><span class="s1">&#39;Georgia&#39;</span><span class="p">,</span><span class="s1">&#39;GA&#39;</span><span class="p">,</span><span class="s1">&#39;Ohio&#39;</span><span class="p">,</span><span class="s1">&#39;OH&#39;</span><span class="p">,</span><span class="s1">&#39;Hawaii&#39;</span><span class="p">,</span><span class="s1">&#39;HI&#39;</span><span class="p">,</span><span class="s1">&#39;Oklahoma&#39;</span><span class="p">,</span><span class="s1">&#39;OK&#39;</span><span class="p">,</span><span class="s1">&#39;Idaho&#39;</span><span class="p">,</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span><span class="s1">&#39;Oregon&#39;</span><span class="p">,</span><span class="s1">&#39;OR&#39;</span><span class="p">,</span><span class="s1">&#39;Illinois&#39;</span><span class="p">,</span><span class="s1">&#39;IL&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Pennsylvania&#39;</span><span class="p">,</span><span class="s1">&#39;PA&#39;</span><span class="p">,</span><span class="s1">&#39;Indiana&#39;</span><span class="p">,</span><span class="s1">&#39;IN&#39;</span><span class="p">,</span><span class="s1">&#39;Rhode Island&#39;</span><span class="p">,</span><span class="s1">&#39;RI&#39;</span><span class="p">,</span><span class="s1">&#39;Iowa&#39;</span><span class="p">,</span><span class="s1">&#39;IA&#39;</span><span class="p">,</span><span class="s1">&#39;South Carolina&#39;</span><span class="p">,</span><span class="s1">&#39;SC&#39;</span><span class="p">,</span><span class="s1">&#39;Kansas&#39;</span><span class="p">,</span><span class="s1">&#39;KS&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;South Dakota&#39;</span><span class="p">,</span><span class="s1">&#39;SD&#39;</span><span class="p">,</span><span class="s1">&#39;Kentucky&#39;</span><span class="p">,</span><span class="s1">&#39;KY&#39;</span><span class="p">,</span><span class="s1">&#39;Tennessee&#39;</span><span class="p">,</span><span class="s1">&#39;TN&#39;</span><span class="p">,</span><span class="s1">&#39;Louisiana&#39;</span><span class="p">,</span><span class="s1">&#39;LA&#39;</span><span class="p">,</span><span class="s1">&#39;Texas&#39;</span><span class="p">,</span><span class="s1">&#39;TX&#39;</span><span class="p">,</span><span class="s1">&#39;Maine&#39;</span><span class="p">,</span><span class="s1">&#39;ME&#39;</span><span class="p">,</span><span class="s1">&#39;Utah&#39;</span><span class="p">,</span><span class="s1">&#39;UT&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Maryland&#39;</span><span class="p">,</span><span class="s1">&#39;MD&#39;</span><span class="p">,</span><span class="s1">&#39;Vermont&#39;</span><span class="p">,</span><span class="s1">&#39;VT&#39;</span><span class="p">,</span><span class="s1">&#39;Massachusetts&#39;</span><span class="p">,</span><span class="s1">&#39;MA&#39;</span><span class="p">,</span><span class="s1">&#39;Virginia&#39;</span><span class="p">,</span><span class="s1">&#39;VA&#39;</span><span class="p">,</span><span class="s1">&#39;Michigan&#39;</span><span class="p">,</span><span class="s1">&#39;MI&#39;</span><span class="p">,</span><span class="s1">&#39;Washington&#39;</span><span class="p">,</span><span class="s1">&#39;WA&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Minnesota&#39;</span><span class="p">,</span><span class="s1">&#39;MN&#39;</span><span class="p">,</span><span class="s1">&#39;West Virginia&#39;</span><span class="p">,</span><span class="s1">&#39;WV&#39;</span><span class="p">,</span><span class="s1">&#39;Mississippi&#39;</span><span class="p">,</span><span class="s1">&#39;MS&#39;</span><span class="p">,</span><span class="s1">&#39;Wisconsin&#39;</span><span class="p">,</span><span class="s1">&#39;WI&#39;</span><span class="p">,</span><span class="s1">&#39;Missouri&#39;</span><span class="p">,</span><span class="s1">&#39;MO&#39;</span><span class="p">,</span><span class="s1">&#39;Wyoming&#39;</span><span class="p">,</span><span class="s1">&#39;WY&#39;</span><span class="p">]</span>
+
+<span class="n">the_states</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">USA</span><span class="p">))</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s1">&#39;usa_db&#39;</span><span class="p">]</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s1">&#39;usa_tweets_collection&#39;</span><span class="p">]</span>
+<span class="n">tweets_iterator</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+
+<span class="c1">#counts the occurence of every emoji per state, sorts by occurrence and returns the emojis</span>
+<span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="n">mylist</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">mylist</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d</span><span class="p">]</span>
+
+
+<span class="c1">#get top 2 emojis per state</span>
+<span class="n">d1</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets_iterator</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s1">&#39;,&#39;</span> <span class="ow">in</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">UNICODE_EMOJI</span><span class="p">:</span>
+                <span class="c1">#extract the state from the user address</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="c1">#make sure location is enabled and the state is a US state</span>
+                <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;coordinates&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">the_states</span><span class="p">:</span> 
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">d2</span><span class="p">[</span><span class="n">state</span><span class="p">][</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;coordinates&#39;</span><span class="p">][</span><span class="s1">&#39;coordinates&#39;</span><span class="p">]</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">d2</span><span class="p">[</span><span class="n">state</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">ch</span> <span class="p">:</span>  <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;coordinates&#39;</span><span class="p">][</span><span class="s1">&#39;coordinates&#39;</span><span class="p">]}</span>
+                    <span class="c1"># get all emojis per state</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">d1</span><span class="p">[</span><span class="n">state</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">d1</span><span class="p">[</span><span class="n">state</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">ch</span><span class="p">]</span>
+
+<span class="c1">#get top 2 emojis per state</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">d1</span><span class="p">:</span>
+    <span class="n">d1</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span><span class="p">(</span><span class="n">d1</span><span class="p">[</span><span class="n">key</span><span class="p">])[:</span><span class="mi">2</span><span class="p">]</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;tx&#39;: [&#39;🚨&#39;, &#39;‼&#39;], &#39;ohio&#39;: [&#39;👉&#39;, &#39;🏀&#39;], &#39;illinois&#39;: [&#39;🎁&#39;, &#39;🎄&#39;], &#39;pennsylvania&#39;: [&#39;🌧&#39;], &#39;ca&#39;: [&#39;🔥&#39;, &#39;🎄&#39;], &#39;connecticut&#39;: [&#39;♀&#39;, &#39;💂&#39;], &#39;ri&#39;: [&#39;👌&#39;, &#39;📝&#39;], &#39;ms&#39;: [&#39;🐊&#39;, &#39;\U0001f919&#39;], &#39;maine&#39;: [&#39;\U0001f5a4&#39;, &#39;😓&#39;], &#39;nd&#39;: [&#39;🎅&#39;, &#39;🎁&#39;], &#39;ny&#39;: [&#39;❤&#39;, &#39;💋&#39;], &#39;wi&#39;: [&#39;👌&#39;, &#39;🙌&#39;], &#39;nj&#39;: [&#39;🔥&#39;, &#39;😂&#39;], &#39;tn&#39;: [&#39;✨&#39;, &#39;☠&#39;], &#39;mt&#39;: [&#39;\U0001f923&#39;, &#39;🐶&#39;], &#39;md&#39;: [&#39;♂&#39;, &#39;🏾&#39;], &#39;arizona&#39;: [&#39;🍗&#39;, &#39;🦃&#39;], &#39;in&#39;: [&#39;🎄&#39;, &#39;🐱&#39;], &#39;sd&#39;: [&#39;🐋&#39;], &#39;co&#39;: [&#39;💦&#39;, &#39;👯&#39;], &#39;or&#39;: [&#39;😍&#39;, &#39;‼&#39;], &#39;nevada&#39;: [&#39;💯&#39;, &#39;✨&#39;], &#39;arkansas&#39;: [&#39;👏&#39;, &#39;⏳&#39;], &#39;wisconsin&#39;: [&#39;🌞&#39;], &#39;va&#39;: [&#39;👧&#39;, &#39;🏼&#39;], &#39;massachusetts&#39;: [&#39;♥&#39;, &#39;🎉&#39;], &#39;fl&#39;: [&#39;🏾&#39;, &#39;💪&#39;], &#39;la&#39;: [&#39;❄&#39;, &#39;🎉&#39;], &#39;alabama&#39;: [&#39;\U0001f5a4&#39;, &#39;💗&#39;], &#39;il&#39;: [&#39;🏻&#39;, &#39;🎄&#39;], &#39;oh&#39;: [&#39;😏&#39;, &#39;🙏&#39;], &#39;ok&#39;: [&#39;🏀&#39;], &#39;mo&#39;: [&#39;🌊&#39;, &#39;🌹&#39;], &#39;pa&#39;: [&#39;❗&#39;, &#39;☕&#39;], &#39;ma&#39;: [&#39;🙌&#39;, &#39;☕&#39;], &#39;sc&#39;: [&#39;🍷&#39;, &#39;🍾&#39;], &#39;mn&#39;: [&#39;💛&#39;, &#39;🙌&#39;], &#39;ut&#39;: [&#39;\U0001f952&#39;, &#39;🌨&#39;], &#39;hi&#39;: [&#39;🎣&#39;, &#39;🌎&#39;], &#39;mississippi&#39;: [&#39;🍂&#39;, &#39;🍃&#39;], &#39;maryland&#39;: [&#39;🏀&#39;, &#39;✍&#39;], &#39;al&#39;: [&#39;😚&#39;, &#39;🎄&#39;], &#39;mi&#39;: [&#39;🏽&#39;, &#39;💯&#39;], &#39;florida&#39;: [&#39;💕&#39;, &#39;💞&#39;], &#39;me&#39;: [&#39;🌲&#39;, &#39;🔥&#39;], &#39;california&#39;: [&#39;❤&#39;, &#39;🐢&#39;], &#39;wa&#39;: [&#39;⚡&#39;, &#39;👧&#39;], &#39;ct&#39;: [&#39;💪&#39;, &#39;👁&#39;], &#39;iowa&#39;: [&#39;⚾&#39;], &#39;ne&#39;: [&#39;🌲&#39;, &#39;🎅&#39;], &#39;indiana&#39;: [&#39;💗&#39;], &#39;texas&#39;: [&#39;💯&#39;, &#39;❤&#39;], &#39;wv&#39;: [&#39;🍩&#39;, &#39;⚡&#39;], &#39;tennessee&#39;: [&#39;🐾&#39;, &#39;❤&#39;], &#39;wy&#39;: [&#39;😊&#39;, &#39;🙌&#39;], &#39;ia&#39;: [&#39;🤘&#39;, &#39;🏽&#39;], &#39;michigan&#39;: [&#39;🎉&#39;, &#39;🎄&#39;], &#39;oregon&#39;: [&#39;❄&#39;], &#39;oklahoma&#39;: [&#39;😂&#39;, &#39;🌈&#39;], &#39;washington&#39;: [&#39;❣&#39;], &#39;ar&#39;: [&#39;👀&#39;, &#39;💈&#39;], &#39;nv&#39;: [&#39;🙌&#39;, &#39;♀&#39;], &#39;ga&#39;: [&#39;💪&#39;, &#39;🔥&#39;], &#39;de&#39;: [&#39;❤&#39;], &#39;colorado&#39;: [&#39;☀&#39;, &#39;📸&#39;], &#39;virginia&#39;: [&#39;✨&#39;], &#39;nc&#39;: [&#39;🎄&#39;, &#39;🏾&#39;], &#39;ks&#39;: [&#39;🎉&#39;], &#39;az&#39;: [&#39;🌹&#39;, &#39;😍&#39;], &#39;ky&#39;: [&#39;🙏&#39;, &#39;\U0001f5a4&#39;], &#39;utah&#39;: [&#39;\U0001f951&#39;, &#39;😘&#39;], &#39;georgia&#39;: [&#39;🏾&#39;, &#39;🙏&#39;]}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Great! Now that we have the top emojis per state and we recorded some coordinates in the state. We can now put these emojis on the map!</p>
+<p>Folium has a custom marker method that allows you to create your own marker instead of using uilt-in ones such as the circles we used above. The problem is, this method only accepts images or urls of images. We will need to search online to find links to these images. We will want to automate this process because of the quantity of emojis we have so let's do a bit of web crawling!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">folium</span>
+<span class="kn">from</span> <span class="nn">emoji</span> <span class="k">import</span> <span class="n">UNICODE_EMOJI</span><span class="p">,</span> <span class="n">emojize</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="k">import</span> <span class="n">webdriver</span>
+
+<span class="n">mymap</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="mf">45.372</span><span class="p">,</span> <span class="o">-</span><span class="mf">121.6972</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">d1</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">emo0</span> <span class="ow">in</span> <span class="n">d1</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+        <span class="c1">#print(emo0)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">site</span> <span class="o">=</span> <span class="s1">&#39;https://emojipedia.org/&#39;</span><span class="o">+</span> <span class="n">emojize</span><span class="p">(</span><span class="n">emo0</span><span class="p">)</span>
+            <span class="n">browser</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s1">&#39;./chromedriver&#39;</span><span class="p">)</span>
+            <span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
+            <span class="n">html_source</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">page_source</span>
+            <span class="n">links</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/.+.png&#39;</span><span class="p">,</span> <span class="n">html_source</span><span class="p">)</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="n">links</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.png&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span>
+            <span class="c1">#print(&#39;link to image = &#39;, link)</span>
+            <span class="n">icon_url</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">CustomIcon</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+            <span class="n">coord</span> <span class="o">=</span> <span class="n">d2</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">emo0</span><span class="p">]</span>
+            <span class="c1">#print(coord)</span>
+            <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">coord</span><span class="p">)),</span> <span class="n">icon</span><span class="o">=</span><span class="n">icon_url</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mymap</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;failed &#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+<span class="n">mymap</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;emojiMap.html&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">mymap</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice that we never download any images. We simply grab the link from the page and hand it to the map. Running the above code may take time but you will eventually get the following map of emojis in the US:</p>
+<p><img src="./tweetsUSAemojis.jpg" alt="Image"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Neat. Try to find what emojis are most popular in your state!</p>
+<p>Emojis are great because we can quickly visually see the emotions conveyed instead of reading entire tweets. But this may not be as accurate because emojis are used for so many different reasons. So we need to look at text as well to get the full scope.</p>
 <h3 id="Sentiment-Analysis">Sentiment Analysis<a class="anchor-link" href="#Sentiment-Analysis">&#182;</a></h3><p>We can analyze the words of the tweets to get a sense of whether the tweet has positive sentiment or negative sentiment. We can aggregate these and get a sense of the general mood of the US at this time of year.</p>
 
 </div>
