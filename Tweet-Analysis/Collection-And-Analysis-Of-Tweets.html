@@ -11775,10 +11775,11 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Collecting-and-Analyzing-Tweets">Collecting and Analyzing Tweets<a class="anchor-link" href="#Collecting-and-Analyzing-Tweets">&#182;</a></h1><p>To replicate my set up and run this notebook, please visit <a href="https://github.com/galletti94/Tweet-Monitor">https://github.com/galletti94/Tweet-Monitor</a>. To view other projects I am working on please click <a href="http://gallettilance.org">here</a></p>
+<h1 id="Collecting-and-Analyzing-Tweets">Collecting and Analyzing Tweets<a class="anchor-link" href="#Collecting-and-Analyzing-Tweets">&#182;</a></h1><h2 id="About">About<a class="anchor-link" href="#About">&#182;</a></h2><p>This project aims to give the reader a glimpse of all that can be deduced and explored from data. Although this notebook touches upon many technical topics, I hope that, even without coding experience, a reader will be able to appreciate the countless ways to look at data, and the limitless correlations that can be infered. My hope is that the reader will return more aware, from reading this post, of the data they volunteer and the implications associated.</p>
+<p>If you have a coding background, you can replicate my setup <a href="https://github.com/galletti94/Tweet-Monitor">here</a>.</p>
+<p>You can also view other projects I am working on <a href="http://gallettilance.org">here</a></p>
 <h2 id="Exploratory-Data-Analysis">Exploratory Data Analysis<a class="anchor-link" href="#Exploratory-Data-Analysis">&#182;</a></h2><p>I love exploring data! As you will see, taking the time to explore the data and develop some intuition about what we have collected will make us much more producive during the analysis and modeling phase. We will be able to quickly understand why some models fail and identify what next steps should be taken. Let's get started!</p>
-<h3 id="Let's-get-some-tweets!">Let's get some tweets!<a class="anchor-link" href="#Let's-get-some-tweets!">&#182;</a></h3><p>We are using the twitter API which requires you to have a twitter account. Twitter gives you access keys which are unique to your account. These keys will go in a file called keys.txt following the convention in the code below. We make sure to include 'keys.txt' in the .gitignore file so that these are not made publically available.</p>
-<p>Let's get started!</p>
+<h3 id="Let's-get-some-tweets!">Let's get some tweets!<a class="anchor-link" href="#Let's-get-some-tweets!">&#182;</a></h3><p>For this we use the twitter API which requires a twitter account. Let's get started!</p>
 
 </div>
 </div>
@@ -11873,10 +11874,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can let this run and collect some tweets!</p>
-<p>After waiting a few minutes for your database to fill up, you can hit CTRL + C to stop the collection and stop the program.</p>
+<p>We can let this run and collect some tweets! After waiting a few minutes for your database to fill up, you can hit CTRL + C to stop the collection and stop the program.</p>
 <h3 id="What-do-we-have-here?">What do we have here?<a class="anchor-link" href="#What-do-we-have-here?">&#182;</a></h3><p>Let's take a look at the tweets we collected!</p>
-<h3 id="Where-in-the-US-are-these-tweets-coming-from?">Where in the US are these tweets coming from?<a class="anchor-link" href="#Where-in-the-US-are-these-tweets-coming-from?">&#182;</a></h3><p>We can use folium to map the coordinates of the tweets on a map:</p>
+<h3 id="Where-in-the-US-are-these-tweets-coming-from?">Where in the US are these tweets coming from?<a class="anchor-link" href="#Where-in-the-US-are-these-tweets-coming-from?">&#182;</a></h3><p>We can use 'folium' to map the coordinates of the tweets on a map:</p>
 
 </div>
 </div>
@@ -12086,7 +12086,8 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Great! Now that we have the top emojis per state and have recorded some coordinates in each state, we can start mapping!</p>
-<p>Folium has a custom marker method that allows you to create your own marker instead of using built-in ones such as the circles we used above. The problem is this method only accepts images or urls of images. We will need to search online to find links to these images and we will want to automate this process because of the quantity of emojis we have. We need to do a bit of web crawling! I will only post an outline of this code here but the idea is that we will end up with a dictionary of links to emoji images - never downloading any of these images. We can then use this dictionary to generate the custom markers and create the map!</p>
+<p>Folium allows you to create your own marker instead of using built-in ones such as the circles we used above. The problem is this can only be done with images or urls of images. And emojis are not images, they are characters.</p>
+<p>We will need to search online to find links to the images corresponding to each emoji. We will want to automate this process because of the quantity of emojis we have. So we need to do a bit of web crawling! I will only post an outline of this code here but the idea is that we will end up with a dictionary of links to the emoji images - never downloading any image. We can then use this dictionary to generate the custom markers and create the map!</p>
 
 </div>
 </div>
@@ -12190,7 +12191,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Neat. Zoom in and check out what emojis are most popular in your state!</p>
-<p>Emojis are great because we can quickly visualize what a tweet conveys without having to read the entire tweet. However this may not be as accurate because emojis are used for many reasons. So we do need to look at text as well to get the full scope.</p>
+<p>Emojis allow us to quickly visualize what a tweet conveys without having to read the entire tweet. However this may not be as accurate because emojis are used for many reasons. So we do need to look at text as well to get the full scope.</p>
 <h3 id="Sentiment-Analysis">Sentiment Analysis<a class="anchor-link" href="#Sentiment-Analysis">&#182;</a></h3><p>We can analyze the words of the tweets to get a sense of whether the tweet has positive sentiment or negative sentiment. We can aggregate these and get a sense of the general mood of the US at this time of year.</p>
 
 </div>
@@ -12334,8 +12335,8 @@ negative_emojis =  [(&#39;😭&#39;, 7), (&#39;🔥&#39;, 6), (&#39;💦&#39;, 4
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Great! It seems intuitive that a rose, a heart, and stars be associated with positive sentiment and a crying face would be associated with negative sentiment. It is good to see these results support our intuition!</p>
-<p>Now we would like to know what kinds of tweets do people with location disabled make?</p>
-<h3 id="Location-Disabled-Tweets---Emojis">Location Disabled Tweets - Emojis<a class="anchor-link" href="#Location-Disabled-Tweets---Emojis">&#182;</a></h3><p>First let's look at the kinds of emojis are used in both groups.</p>
+<p>Now we would like to know what kinds of tweets people, whose location is disabled, make?</p>
+<h3 id="Location-Disabled-Tweets---Emojis">Location Disabled Tweets - Emojis<a class="anchor-link" href="#Location-Disabled-Tweets---Emojis">&#182;</a></h3><p>First let's look at the kinds of emojis used in both groups.</p>
 
 </div>
 </div>
@@ -12478,7 +12479,7 @@ location disabled tags =  [(&#39;#netneutrality&#39;, 2), (&#39;#ImpeachTrump&#3
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It looks like tweets with location disabled don't contain many tags. I will let you make your own conclusions about the content type...</p>
-<p>To get a better idea of what topics people with location enables and disabled tweet about, we can turn the problem around. Let's start from a specific set of keywords and observe the distribution of location enabled vs disabled!</p>
+<p>To get a better idea of what topics people with location enabled and disabled tweet about, we can turn the problem around. Let's start from a specific set of keywords and observe the distribution of location enabled vs disabled!</p>
 <h3 id="Keywords-about-Machine-Learning">Keywords about Machine Learning<a class="anchor-link" href="#Keywords-about-Machine-Learning">&#182;</a></h3>
 </div>
 </div>
@@ -12799,7 +12800,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>But Instagram is also an application available on smart phones like Android and iPhone. Are your location settings application dependent? That is, if you share an instagram post on twitter, is your location setting that of instagram or that of twitter? And does this vary per device? Someone should test this out!</p>
-<p>Now that we have explored the tweets we have collected and gained some intuition about what people tweet, where, how, and why, we can try and solve a concrete problem. I am particularly interested in seeing whether it is possible to predict if someone's location is enabled or disabled based on the emojis they use. Let's find out!</p>
+<p>Now that we have explored the tweets we have collected and gained some intuition about what people tweet, where, how, and why, we can try and solve a concrete problem. I am particularly interested in seeing whether it is possible to predict if someone's location is enabled or disabled solely based on the emojis they use. Let's find out!</p>
 <h2 id="Learning">Learning<a class="anchor-link" href="#Learning">&#182;</a></h2><p>First we create a table where the columns are emojis and the rows are specific tweets. An element of this table will be 1 if the tweet contains the emoji of the given column and 0 otherwise. (Note: A different approach could be to have the elements represent the frequency with which each emoji appears in a given tweet). We can then do some linear algebra to see which combinations of emojis contribute the most to the information of the table.</p>
 <h3 id="SVD">SVD<a class="anchor-link" href="#SVD">&#182;</a></h3>
 </div>
