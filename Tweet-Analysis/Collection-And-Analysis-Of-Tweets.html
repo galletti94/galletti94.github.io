@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8" /><meta property="og:title" content="Collecting And Analyzing Tweets | Lance Galletti"/>
-<meta property="og:image" content="tweetsUSAemojis.jpg"><meta property="og:description" content="This project aims to give the reader a glimpse of all that can be deduced and explored from data."/>
+<head><meta charset="utf-8" />
 <title>Collection-And-Analysis-Of-Tweets</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
@@ -12858,7 +12857,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -12922,7 +12921,7 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">PCA</span> <span class="k">as</span> <span class="n">sklearnPCA</span>
@@ -12932,12 +12931,12 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 <span class="n">i</span> <span class="o">=</span> <span class="mi">20000</span>
 <span class="n">location</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets_iterator</span><span class="p">:</span>
-  <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">1000</span><span class="p">:</span>   
-    <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;coordinates&#39;</span><span class="p">]:</span>
-      <span class="n">location</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-      <span class="n">location</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-  <span class="n">i</span><span class="o">-=</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">1000</span><span class="p">:</span>   
+        <span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s1">&#39;coordinates&#39;</span><span class="p">]:</span>
+            <span class="n">location</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">location</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">i</span><span class="o">-=</span><span class="mi">1</span>
 
 <span class="c1">#Extract the first 100 principal components</span>
 <span class="n">sklearn_pca</span> <span class="o">=</span> <span class="n">sklearnPCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -12950,52 +12949,69 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 <span class="k">def</span> <span class="nf">sigDiv</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 
-<span class="k">def</span> <span class="nf">NN3_sig</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">stopWhen</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">NN3_sig</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+    
+    <span class="n">hidden</span> <span class="o">=</span> <span class="mi">3</span>
+    
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Using activation function sig ---&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------- error through training ------&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    
     <span class="n">colsize</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
     <span class="n">rowsize</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]))</span>
     
-    <span class="n">w0</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">colsize</span><span class="p">,</span> <span class="n">colsize</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="n">w1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">colsize</span><span class="p">,</span> <span class="n">rowsize</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="n">w2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">rowsize</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">w1</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowsize</span><span class="p">):</span>
+            <span class="n">l0</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">l1</span> <span class="o">=</span> <span class="n">sig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l0</span><span class="p">,</span> <span class="n">w0</span><span class="p">))</span>
+            <span class="n">l2</span> <span class="o">=</span> <span class="n">sig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">w1</span><span class="p">))</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">l2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">4</span><span class="p">))</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">l2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---- predictions ----&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------- error -------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    
+    
+    <span class="n">w0</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">colsize</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">w1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="n">err</span> <span class="o">=</span> <span class="p">[]</span>
     
-    <span class="k">while</span> <span class="n">stopWhen</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">stopWhen</span> <span class="o">-=</span> <span class="mi">1</span>
-        <span class="n">l0</span> <span class="o">=</span> <span class="n">X</span>
-        <span class="n">l1</span> <span class="o">=</span> <span class="n">sig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l0</span><span class="p">,</span> <span class="n">w0</span><span class="p">))</span> 
-        <span class="n">l2</span> <span class="o">=</span> <span class="n">sig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">w1</span><span class="p">))</span>
-        <span class="n">l3</span> <span class="o">=</span> <span class="n">sig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l2</span><span class="p">,</span> <span class="n">w2</span><span class="p">))</span>
-
-        <span class="n">l3_error</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">-</span> <span class="n">l3</span>
+    <span class="k">while</span> <span class="n">epoch</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">epoch</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">tempErr</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowsize</span><span class="p">):</span>
+            <span class="n">l0</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">l1</span> <span class="o">=</span> <span class="n">sig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l0</span><span class="p">,</span> <span class="n">w0</span><span class="p">))</span>
+            <span class="n">l2</span> <span class="o">=</span> <span class="n">sig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">w1</span><span class="p">))</span>
+            
+            <span class="n">l2_error</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">l2</span>
+            
+            <span class="n">l2_delta</span> <span class="o">=</span> <span class="n">l2_error</span> <span class="o">*</span> <span class="n">sigDiv</span><span class="p">(</span><span class="n">l2</span><span class="p">)</span>
+            <span class="n">l1_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l2_delta</span><span class="p">,</span> <span class="n">w1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+            <span class="n">l1_delta</span> <span class="o">=</span> <span class="n">l1_error</span> <span class="o">*</span> <span class="n">sigDiv</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
         
-        <span class="n">l3_delta</span> <span class="o">=</span> <span class="n">l3_error</span> <span class="o">*</span> <span class="n">sigDiv</span><span class="p">(</span><span class="n">l3</span><span class="p">)</span>
-        <span class="n">l2_error</span> <span class="o">=</span> <span class="n">l3_delta</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w2</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-        <span class="n">l2_delta</span> <span class="o">=</span> <span class="n">l2_error</span> <span class="o">*</span> <span class="n">sigDiv</span><span class="p">(</span><span class="n">l2</span><span class="p">)</span>
-        <span class="n">l1_error</span> <span class="o">=</span> <span class="n">l2_delta</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-        <span class="n">l1_delta</span> <span class="o">=</span> <span class="n">l1_error</span> <span class="o">*</span> <span class="n">sigDiv</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
-        
-        <span class="n">err</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">l3_error</span><span class="p">))</span>
-        
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">%</span><span class="k">10</span> == 0:
+            <span class="n">tempErr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l2_error</span><span class="p">)</span>
+            
+            <span class="n">w1</span> <span class="o">+=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">l2_delta</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">w0</span> <span class="o">+=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">l0</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">l1_delta</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+            
+        <span class="n">err</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tempErr</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-
-        <span class="n">w0</span> <span class="o">+=</span> <span class="n">l0</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l1_delta</span><span class="p">)</span>
-        <span class="n">w1</span> <span class="o">+=</span> <span class="n">l1</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l2_delta</span><span class="p">)</span>
-        <span class="n">w2</span> <span class="o">+=</span> <span class="n">l2</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">l3_delta</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Predictions made after training: &quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">l3</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;How good are these predictions?&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">l3_error</span><span class="p">))</span>
-    <span class="c1">#return [w0, w1, w2]</span>
+        
+    <span class="k">return</span> <span class="n">query</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">w1</span><span class="p">)</span>
 
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
-<span class="n">NN3_sig</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">NN3_sig</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13014,50 +13030,37 @@ emojis =  [(&#39;🗣&#39;, 20), (&#39;👏&#39;, 8), (&#39;👉&#39;, 6), (&#39
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>--- Using activation function sig ---
 
-</pre>
-</div>
-</div>
+------- error through training ------
 
-<div class="output_area">
+0.567082907985
+0.561750672633
+0.560750259524
+0.560511961872
+0.560257914001
+0.560009359971
+0.559861950942
+0.559138718649
+0.5589903594
+0.558934527744
+---- predictions ----
 
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/alexander/Documents/SQL/MongoDB/Tweet-monitoring-app/tweetEnv/lib/python3.5/site-packages/ipykernel_launcher.py:24: RuntimeWarning: overflow encountered in exp
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>0.0747412619464
-0.0748252374789
-0.0748033625898
-0.0747394471336
-0.074742047879
-0.0747621294683
-0.074683939739
-0.0747049338653
-0.0747229942236
-0.0747388184191
-Predictions made after training: 
-
-[[ 0.5]
- [ 1. ]
- [ 0.5]
+[[ 0.]
+ [ 0.]
+ [ 0.]
  ..., 
- [ 0.5]
- [ 0.5]
- [ 0.5]]
+ [ 0.]
+ [ 0.]
+ [ 0.]]
 
-How good are these predictions?
+------- error -------
 
-0.0747402879282
+[[ 1.]
+ [ 1.]
+ [ 1.]
+ ..., 
+ [-0.]
+ [-0.]
+ [-0.]]
 </pre>
 </div>
 </div>
