@@ -1173,6 +1173,12 @@ ul.portfolio-image li .desc{
 .kaggle a:after{
   background: #008ABD;
 }
+.stackoverflow{
+  background: #ABABAB;
+}
+.stackoverflow a:after{
+    background: #f48024;
+}
 .gmail{
   background: #ABABAB;
 }
