@@ -1087,6 +1087,8 @@ ul.portfolio-image li .desc{
   text-align: center;
   color: #cccccc;
   display: table;
+  position: absolute;
+  bottom: 0;
 }
 
 .socials{
@@ -1097,8 +1099,8 @@ ul.portfolio-image li .desc{
 
 .socials * {
   box-sizing: border-box;
-  -webkit-transition: all 0.35s ease;
-  transition: all 0.35s ease;
+  -webkit-transition: all 0.15s ease;
+  transition: all 0.15s ease;
 }
 
 .socials li {
@@ -1106,7 +1108,7 @@ ul.portfolio-image li .desc{
   list-style: outside none none;
   float: left;
   overflow: hidden;
-  width: 25.0%;
+  width: 33.3%;
   font-size: 13px;
 }
 
@@ -1172,12 +1174,6 @@ ul.portfolio-image li .desc{
 }
 .kaggle a:after{
   background: #008ABD;
-}
-.stackoverflow{
-  background: #ABABAB;
-}
-.stackoverflow a:after{
-    background: #f48024;
 }
 .gmail{
   background: #ABABAB;
